@@ -235,7 +235,7 @@ class _HomeState extends State<Home> {
                                 // Match the container radius for the ripple
                                 onTap: () {
                                   // Navigating and passing the string as an argument
-                                  Navigator.pushNamed(context,'subjects');
+                                  Navigator.pushNamed(context, 'subjects');
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
@@ -326,100 +326,110 @@ class _HomeState extends State<Home> {
                               ),
                               child: Align(
                                 alignment: AlignmentDirectional(0, 1),
-                                child: Container(
-                                  width: double.infinity,
-                                  color: Color(0x00000000),
-                                  child: ExpandableNotifier(
-                                    initialExpanded: true,
-                                    child: ExpandablePanel(
-                                      header: Container(),
-                                      collapsed: Container(),
-                                      expanded: Padding(
-                                        padding:
-                                            const EdgeInsetsDirectional.fromSTEB(
-                                              12,
-                                              16,
-                                              12,
-                                              12,
-                                            ),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Container(
-                                                  width: 60,
-                                                  height: 60,
-                                                  clipBehavior: Clip.antiAlias,
-                                                  decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
+                                child: InkWell(
+                                  onTap: () {
+                                    // Navigating and passing the string as an argument
+                                    Navigator.pushNamed(context, 'teacher');
+                                  },
+                                  child: Container(
+                                    width: double.infinity,
+                                    color: Color(0x00000000),
+                                    child: ExpandableNotifier(
+                                      initialExpanded: true,
+                                      child: ExpandablePanel(
+                                        header: Container(),
+                                        collapsed: Container(),
+                                        expanded: Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                12,
+                                                16,
+                                                12,
+                                                12,
+                                              ),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    width: 60,
+                                                    height: 60,
+                                                    clipBehavior:
+                                                        Clip.antiAlias,
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    child: Image.network(
+                                                      'https://picsum.photos/seed/941/600',
+                                                      fit: BoxFit.cover,
+                                                    ),
                                                   ),
-                                                  child: Image.network(
-                                                    'https://picsum.photos/seed/941/600',
-                                                    fit: BoxFit.cover,
+                                                  SizedBox(width: 20),
+                                                  Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      SizedBox(height: 20),
+                                                      Text(
+                                                        'PROF. 1',
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        'Matemática',
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                      Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        children: [
+                                                          Icon(
+                                                            Icons.star,
+                                                            color: Color(
+                                                              0xFFF9BD05,
+                                                            ),
+                                                            size: 24,
+                                                          ),
+                                                          Text(
+                                                            '4.85',
+                                                            style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            '(25 Feedbacks)',
+                                                            style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
                                                   ),
-                                                ),
-                                                SizedBox(width: 20),
-                                                Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    SizedBox(height: 20),
-                                                    Text(
-                                                      'PROF. 1',
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style: TextStyle(
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      'Matemática',
-                                                      style: TextStyle(
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                    Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      children: [
-                                                        Icon(
-                                                          Icons.star,
-                                                          color: Color(
-                                                            0xFFF9BD05,
-                                                          ),
-                                                          size: 24,
-                                                        ),
-                                                        Text(
-                                                          '4.85',
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          '(25 Feedbacks)',
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ],
+                                                ],
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      theme: const ExpandableThemeData(
-                                        hasIcon: false,
-                                        tapHeaderToExpand: false,
-                                        tapBodyToCollapse: false,
+                                        theme: const ExpandableThemeData(
+                                          hasIcon: false,
+                                          tapHeaderToExpand: false,
+                                          tapBodyToCollapse: false,
+                                        ),
                                       ),
                                     ),
                                   ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:instituto_braziel/components/_new_password.dart';
-import 'package:instituto_braziel/components/_send_email.dart';
+import 'package:instituto_braziel/components/_generic_alert.dart';
+import 'package:instituto_braziel/components/_send_reset_password.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
@@ -20,13 +20,14 @@ class ForgotPassword extends StatefulWidget {
 
 class _ForgotPassword extends State<ForgotPassword> {
   String? selectedOption;
+  String? selectedOptionVerification;
   _pageToGoTo() {
-    if (selectedOption == 'email') {
-      return SendEmail();
-    } else if (selectedOption == 'celular') {
-      return NewPassword(); //mudar
+    if (selectedOptionVerification == 'email') {
+      return SendResetPassword(field: 'Email', message: 'Digite seu e-mail para enviaremos um link para alteração da senha!', icon: Icons.email);
+    } else if (selectedOptionVerification == 'celular') {
+      return SendResetPassword(field: 'Celular', message: 'Digite celular para enviaremos um link para alteração da senha!', icon: Icons.phone);
     } else {
-      return NewPassword(); //mudar
+      return SendResetPassword(field: 'Usuário', message: 'Digite seu usuário para enviaremos um link para alteração da senha!', icon: Icons.person);
     }
   }
 
@@ -106,10 +107,10 @@ class _ForgotPassword extends State<ForgotPassword> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         RadioGroup<String>(
-                          groupValue: selectedOption,
+                          groupValue: selectedOptionVerification,
                           onChanged: (String? newValue) {
                             setState(() {
-                              selectedOption = newValue;
+                              selectedOptionVerification = newValue;
                             });
                           },
                           child: Column(
@@ -170,14 +171,43 @@ class _ForgotPassword extends State<ForgotPassword> {
                     padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
                     child: OutlinedButton(
                       onPressed: () async {
-                        if (selectedOption == null) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Favor selecionar uma opção!'),
-                              behavior: SnackBarBehavior.floating,
-                            ),
+                        if ((selectedOption == null || selectedOption == "") &&
+                            (selectedOptionVerification == null ||
+                                selectedOptionVerification == "")) {
+                          await showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return GenerericAlert(
+                                message:
+                                    'Favor selecionar uma opção antes de continuar!',
+                              );
+                            },
                           );
                           return; // Stop here
+                        } else if (selectedOption == null ||
+                            selectedOption == "") {
+                          await showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return GenerericAlert(
+                                message:
+                                    'Favor selecionar PROFESSOR(A) ou ALUNO(A)',
+                              );
+                            },
+                          );
+                          return; 
+                        } else if (selectedOptionVerification == null ||
+                            selectedOptionVerification == "") {
+                          await showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return GenerericAlert(
+                                message:
+                                    'Favor selecionar uma opção para enviarmos o link de alteração de senha!',
+                              );
+                            },
+                          );
+                          return; 
                         }
                         await showModalBottomSheet(
                           isScrollControlled: true,

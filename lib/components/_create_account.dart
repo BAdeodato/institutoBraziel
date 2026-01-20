@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instituto_braziel/components/_generic_alert.dart';
 
 class CreateAccount extends StatefulWidget {
   const CreateAccount({super.key});
@@ -17,7 +18,7 @@ class CreateAccount extends StatefulWidget {
 }
 
 class _CreateAccount extends State<CreateAccount> {
-    String? selectedUser;
+  String? selectedUser;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -41,47 +42,47 @@ class _CreateAccount extends State<CreateAccount> {
               child: Column(
                 children: [
                   Container(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          RadioGroup<String>(
-                            groupValue: selectedUser,
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                selectedUser = newValue;
-                              });
-                            },
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                RadioListTile<String>(
-                                  title: Text(
-                                    'SOU PROFESSOR(A)',
-                                    style: TextStyle(color: Color(0xFF06223a)),
-                                  ),
-                                  value: 'professor',
-                                  activeColor: Color(0xFF06223a),
-                                  fillColor: WidgetStatePropertyAll(
-                                    Color(0xFF06223a),
-                                  ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        RadioGroup<String>(
+                          groupValue: selectedUser,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              selectedUser = newValue;
+                            });
+                          },
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              RadioListTile<String>(
+                                title: Text(
+                                  'SOU PROFESSOR(A)',
+                                  style: TextStyle(color: Color(0xFF06223a)),
                                 ),
-                                RadioListTile<String>(
-                                  title: Text(
-                                    'SOU ALUNO(A)',
-                                    style: TextStyle(color: Color(0xFF06223a)),
-                                  ),
-                                  value: 'aluno',
-                                  activeColor: Color(0xFF06223a),
-                                  fillColor: WidgetStatePropertyAll(
-                                    Color(0xFF06223a),
-                                  ),
+                                value: 'professor',
+                                activeColor: Color(0xFF06223a),
+                                fillColor: WidgetStatePropertyAll(
+                                  Color(0xFF06223a),
                                 ),
-                              ],
-                            ),
+                              ),
+                              RadioListTile<String>(
+                                title: Text(
+                                  'SOU ALUNO(A)',
+                                  style: TextStyle(color: Color(0xFF06223a)),
+                                ),
+                                value: 'aluno',
+                                activeColor: Color(0xFF06223a),
+                                fillColor: WidgetStatePropertyAll(
+                                  Color(0xFF06223a),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
+                  ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                     child: Container(
@@ -95,9 +96,7 @@ class _CreateAccount extends State<CreateAccount> {
                             ),
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          prefixIcon: Icon(
-                            Icons.person,
-                          ),
+                          prefixIcon: Icon(Icons.person),
                         ),
                       ),
                     ),
@@ -115,9 +114,7 @@ class _CreateAccount extends State<CreateAccount> {
                             ),
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          prefixIcon: Icon(
-                            Icons.phone,
-                          ),
+                          prefixIcon: Icon(Icons.phone),
                         ),
                       ),
                     ),
@@ -135,9 +132,7 @@ class _CreateAccount extends State<CreateAccount> {
                             ),
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          prefixIcon: Icon(
-                            Icons.email,
-                          ),
+                          prefixIcon: Icon(Icons.email),
                         ),
                       ),
                     ),
@@ -155,9 +150,7 @@ class _CreateAccount extends State<CreateAccount> {
                             ),
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          prefixIcon: Icon(
-                            Icons.lock,
-                          ),
+                          prefixIcon: Icon(Icons.lock),
                         ),
                       ),
                     ),
@@ -175,9 +168,7 @@ class _CreateAccount extends State<CreateAccount> {
                             ),
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          prefixIcon: Icon(
-                            Icons.lock,
-                          ),
+                          prefixIcon: Icon(Icons.lock),
                         ),
                       ),
                     ),
@@ -185,27 +176,35 @@ class _CreateAccount extends State<CreateAccount> {
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
                     child: OutlinedButton(
-                                  onPressed: () async {
-                                    Navigator.pushNamed(context, 'home');
-                                  },
-                                  style: ButtonStyle(
-                                    backgroundColor: WidgetStatePropertyAll(
-                                      Color(0xFF06223a),
-                                    ),
-                                    minimumSize: WidgetStatePropertyAll(
-                                      Size(220, 50),
-                                    ),
-                                    side: WidgetStateProperty.all(
-                                      const BorderSide(
-                                        color: Colors.transparent,
-                                      ),
-                                    ),
-                                  ),
-                                  child: Text(
-                                    'CRIAR CONTA',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
+                      onPressed: () async {
+                        if (selectedUser == null || selectedUser == '') {
+                          await showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return GenerericAlert(
+                                message:
+                                    'Favor selecionar PROFESSOR(A) ou ALUNO(A)',
+                              );
+                            },
+                          );
+                          return;
+                        }
+                        Navigator.pushNamed(context, 'home');
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(
+                          Color(0xFF06223a),
+                        ),
+                        minimumSize: WidgetStatePropertyAll(Size(220, 50)),
+                        side: WidgetStateProperty.all(
+                          const BorderSide(color: Colors.transparent),
+                        ),
+                      ),
+                      child: Text(
+                        'CRIAR CONTA',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
                   ),
                 ],
               ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:instituto_braziel/components/_create_account.dart';
 import 'package:instituto_braziel/components/_forgot_password.dart';
+import 'package:instituto_braziel/components/_generic_alert.dart';
 import 'package:instituto_braziel/components/_new_password.dart';
 
 class Login extends StatefulWidget {
@@ -235,6 +236,19 @@ class _LoginState extends State<Login> {
                                 ),
                                 child: OutlinedButton(
                                   onPressed: () async {
+                                    if (selectedUser == null ||
+                                        selectedUser == '') {
+                                      await showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return GenerericAlert(
+                                            message:
+                                                'Favor selecionar PROFESSOR(A) ou ALUNO(A)',
+                                          );
+                                        },
+                                      );
+                                      return;
+                                    }
                                     Navigator.pushNamed(context, 'home');
                                   },
                                   style: ButtonStyle(

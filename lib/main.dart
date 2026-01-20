@@ -3,6 +3,8 @@ import 'package:instituto_braziel/pages/_home.dart';
 import 'package:instituto_braziel/pages/_profile.dart';
 import 'package:instituto_braziel/pages/_subject.dart';
 import 'package:instituto_braziel/pages/_subjects.dart';
+import 'package:instituto_braziel/pages/_teacher.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'pages/_login.dart';
 // import 'package:firebase_core/firebase_core.dart';
 // import 'firebase_options.dart';
@@ -38,12 +40,22 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF6F0606)),
       ),
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en', 'US'), // English
+        Locale('pt', 'BR'), // Portuguese
+      ],
       routes: {
         '/': (context) => const Login(),
         'home': (context) => const Home(),
         'profile': (context) => const Profile(),
         'subjects': (context) => const Subjects(),
         'subject': (context) => const Subject(),
+        'teacher': (context) => const Teacher(),
       },
     );
   }
