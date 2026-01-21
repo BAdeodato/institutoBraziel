@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:instituto_braziel/pages/_home.dart';
 import 'package:instituto_braziel/pages/_profile.dart';
@@ -9,7 +11,23 @@ import 'pages/_login.dart';
 // import 'package:firebase_core/firebase_core.dart';
 // import 'firebase_options.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  if (kIsWeb) {
+    await Firebase.initializeApp(
+      options: FirebaseOptions(
+        apiKey: "AIzaSyB7IcjOhirFBVlTHWf873iJejPhrIr6Yj8",
+        authDomain: "intituto-braziel.firebaseapp.com",
+        projectId: "intituto-braziel",
+        storageBucket: "intituto-braziel.firebasestorage.app",
+        messagingSenderId: "879596766924",
+        appId: "1:879596766924:web:bdee7326937b06ae4fa469",
+        measurementId: "G-803KH0JH0R",
+      ),
+    );
+  }else{
+    await Firebase.initializeApp();
+  }
   runApp(const MyApp());
 }
 
