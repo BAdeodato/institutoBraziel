@@ -53,47 +53,45 @@ class _ForgotPassword extends State<ForgotPassword> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Container(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        RadioGroup<String>(
-                          groupValue: selectedOption,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              selectedOption = newValue;
-                            });
-                          },
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              RadioListTile<String>(
-                                title: Text(
-                                  'SOU PROFESSOR(A)',
-                                  style: TextStyle(color: Color(0xFF06223a)),
-                                ),
-                                value: 'professor',
-                                activeColor: Color(0xFF06223a),
-                                fillColor: WidgetStatePropertyAll(
-                                  Color(0xFF06223a),
-                                ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      RadioGroup<String>(
+                        groupValue: selectedOption,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedOption = newValue;
+                          });
+                        },
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            RadioListTile<String>(
+                              title: Text(
+                                'SOU PROFESSOR(A)',
+                                style: TextStyle(color: Color(0xFF06223a)),
                               ),
-                              RadioListTile<String>(
-                                title: Text(
-                                  'SOU ALUNO(A)',
-                                  style: TextStyle(color: Color(0xFF06223a)),
-                                ),
-                                value: 'aluno',
-                                activeColor: Color(0xFF06223a),
-                                fillColor: WidgetStatePropertyAll(
-                                  Color(0xFF06223a),
-                                ),
+                              value: 'professor',
+                              activeColor: Color(0xFF06223a),
+                              fillColor: WidgetStatePropertyAll(
+                                Color(0xFF06223a),
                               ),
-                            ],
-                          ),
+                            ),
+                            RadioListTile<String>(
+                              title: Text(
+                                'SOU ALUNO(A)',
+                                style: TextStyle(color: Color(0xFF06223a)),
+                              ),
+                              value: 'aluno',
+                              activeColor: Color(0xFF06223a),
+                              fillColor: WidgetStatePropertyAll(
+                                Color(0xFF06223a),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 24),
@@ -102,70 +100,68 @@ class _ForgotPassword extends State<ForgotPassword> {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  Container(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        RadioGroup<String>(
-                          groupValue: selectedOptionVerification,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              selectedOptionVerification = newValue;
-                            });
-                          },
-                          child: Column(
-                            // mainAxisSize: MainAxisSize.min,
-                            children: [
-                              RadioListTile<String>(
-                                title: Text(
-                                  'E-MAIL',
-                                  style: TextStyle(color: Color(0xFF06223a)),
-                                ),
-                                secondary: const Icon(
-                                  Icons.email,
-                                  color: Color(0xFF06223a),
-                                ),
-                                value: 'email',
-                                activeColor: Color(0xFF06223a),
-                                fillColor: WidgetStatePropertyAll(
-                                  Color(0xFF06223a),
-                                ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      RadioGroup<String>(
+                        groupValue: selectedOptionVerification,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedOptionVerification = newValue;
+                          });
+                        },
+                        child: Column(
+                          // mainAxisSize: MainAxisSize.min,
+                          children: [
+                            RadioListTile<String>(
+                              title: Text(
+                                'E-MAIL',
+                                style: TextStyle(color: Color(0xFF06223a)),
                               ),
-                              RadioListTile<String>(
-                                title: Text(
-                                  'CELULAR',
-                                  style: TextStyle(color: Color(0xFF06223a)),
-                                ),
-                                value: 'celular',
-                                activeColor: Color(0xFF06223a),
-                                fillColor: WidgetStatePropertyAll(
-                                  Color(0xFF06223a),
-                                ),
-                                secondary: const Icon(
-                                  Icons.phone_android,
-                                  color: Color(0xFF06223a),
-                                ),
+                              secondary: const Icon(
+                                Icons.email,
+                                color: Color(0xFF06223a),
                               ),
-                              RadioListTile<String>(
-                                title: Text(
-                                  'USUÁRIO',
-                                  style: TextStyle(color: Color(0xFF06223a)),
-                                ),
-                                value: 'usuario',
-                                activeColor: Color(0xFF06223a),
-                                fillColor: WidgetStatePropertyAll(
-                                  Color(0xFF06223a),
-                                ),
-                                secondary: const Icon(
-                                  Icons.person,
-                                  color: Color(0xFF06223a),
-                                ),
+                              value: 'email',
+                              activeColor: Color(0xFF06223a),
+                              fillColor: WidgetStatePropertyAll(
+                                Color(0xFF06223a),
                               ),
-                            ],
-                          ),
+                            ),
+                            RadioListTile<String>(
+                              title: Text(
+                                'CELULAR',
+                                style: TextStyle(color: Color(0xFF06223a)),
+                              ),
+                              value: 'celular',
+                              activeColor: Color(0xFF06223a),
+                              fillColor: WidgetStatePropertyAll(
+                                Color(0xFF06223a),
+                              ),
+                              secondary: const Icon(
+                                Icons.phone_android,
+                                color: Color(0xFF06223a),
+                              ),
+                            ),
+                            RadioListTile<String>(
+                              title: Text(
+                                'USUÁRIO',
+                                style: TextStyle(color: Color(0xFF06223a)),
+                              ),
+                              value: 'usuario',
+                              activeColor: Color(0xFF06223a),
+                              fillColor: WidgetStatePropertyAll(
+                                Color(0xFF06223a),
+                              ),
+                              secondary: const Icon(
+                                Icons.person,
+                                color: Color(0xFF06223a),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
@@ -222,7 +218,7 @@ class _ForgotPassword extends State<ForgotPassword> {
                               },
                               child: Padding(
                                 padding: MediaQuery.viewInsetsOf(context),
-                                child: Container(
+                                child: SizedBox(
                                   height:
                                       MediaQuery.sizeOf(context).height * 0.5,
                                   child: _pageToGoTo(),

@@ -29,7 +29,7 @@ class _Profile extends State<Profile> {
         automaticallyImplyLeading: false,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pushNamed(context, 'home');
           },
           icon: Icon(Icons.arrow_back, color: Colors.white),
         ),
@@ -123,7 +123,7 @@ class _Profile extends State<Profile> {
                   children: [
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                      child: Container(
+                      child: SizedBox(
                         width: double.infinity,
                         child: TextFormField(
                           autofocus: true,
@@ -141,7 +141,7 @@ class _Profile extends State<Profile> {
                     ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                      child: Container(
+                      child: SizedBox(
                         width: double.infinity,
                         child: TextFormField(
                           autofocus: true,
@@ -159,7 +159,7 @@ class _Profile extends State<Profile> {
                     ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                      child: Container(
+                      child: SizedBox(
                         width: double.infinity,
                         child: TextFormField(
                           autofocus: true,
@@ -177,7 +177,7 @@ class _Profile extends State<Profile> {
                     ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                      child: Container(
+                      child: SizedBox(
                         width: double.infinity,
                         child: TextFormField(
                           autofocus: true,
@@ -195,7 +195,7 @@ class _Profile extends State<Profile> {
                     ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                      child: Container(
+                      child: SizedBox(
                         width: double.infinity,
                         child: TextFormField(
                           autofocus: true,
@@ -214,7 +214,7 @@ class _Profile extends State<Profile> {
                     ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                      child: Container(
+                      child: SizedBox(
                         width: double.infinity,
                         child: TextFormField(
                           autofocus: true,
@@ -232,7 +232,7 @@ class _Profile extends State<Profile> {
                     ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                      child: Container(
+                      child: SizedBox(
                         width: double.infinity,
                         child: TextFormField(
                           // controller: _model.emailAddressTextController7,
@@ -269,7 +269,7 @@ class _Profile extends State<Profile> {
                   children: [
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                      child: Container(
+                      child: SizedBox(
                         width: double.infinity,
                         child: TextFormField(
                           // controller: _model.emailAddressTextController8,
@@ -289,7 +289,7 @@ class _Profile extends State<Profile> {
                     ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                      child: Container(
+                      child: SizedBox(
                         width: double.infinity,
                         child: TextFormField(
                           // controller: _model.emailAddressTextController9,
@@ -309,7 +309,7 @@ class _Profile extends State<Profile> {
                     ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                      child: Container(
+                      child: SizedBox(
                         width: double.infinity,
                         child: TextFormField(
                           // controller: _model.emailAddressTextController10,
@@ -329,7 +329,7 @@ class _Profile extends State<Profile> {
                     ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                      child: Container(
+                      child: SizedBox(
                         width: double.infinity,
                         child: TextFormField(
                           // controller: _model.emailAddressTextController11,
@@ -356,7 +356,7 @@ class _Profile extends State<Profile> {
                     ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                      child: Container(
+                      child: SizedBox(
                         width: double.infinity,
                         child: TextFormField(
                           // controller: _model.emailAddressTextController12,

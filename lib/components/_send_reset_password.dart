@@ -45,19 +45,17 @@ class SendResetPassword extends StatelessWidget {
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                    child: Container(
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          labelText: field,
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0xFFE6E6E6),
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.circular(12),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        labelText: field,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xFFE6E6E6),
+                            width: 2,
                           ),
-                          prefixIcon: Icon(icon),
+                          borderRadius: BorderRadius.circular(12),
                         ),
+                        prefixIcon: Icon(icon),
                       ),
                     ),
                   ),

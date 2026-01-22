@@ -165,85 +165,83 @@ class _Teacher extends State<Teacher> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [Text('PACOTES')],
                     ),
-                    Container(
-                      child: RadioGroup<String>(
-                        groupValue: selectedOption,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedOption = newValue;
-                          });
-                        },
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Expanded(
-                              child: RadioListTile<String>(
-                                title: Text(
-                                  'AVULSO',
-                                  style: TextStyle(
-                                    color: Color(0xFF06223a),
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                    RadioGroup<String>(
+                      groupValue: selectedOption,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedOption = newValue;
+                        });
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Expanded(
+                            child: RadioListTile<String>(
+                              title: Text(
+                                'AVULSO',
+                                style: TextStyle(
+                                  color: Color(0xFF06223a),
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                subtitle: Text(
-                                  '(1 HR/AULA)\n',
-                                  style: TextStyle(fontSize: 10),
-                                ),
-                                value: 'a',
-                                activeColor: Color(0xFF06223a),
-                                fillColor: WidgetStatePropertyAll(
-                                  Color(0xFF06223a),
-                                ),
-                                contentPadding: EdgeInsets.zero,
                               ),
-                            ),
-                            Expanded(
-                              child: RadioListTile<String>(
-                                title: Text(
-                                  'MENSAL',
-                                  style: TextStyle(
-                                    color: Color(0xFF06223a),
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                subtitle: Text(
-                                  '(8 HRS/AULA) \n(1 MÊS)',
-                                  style: TextStyle(fontSize: 10),
-                                ),
-                                value: 'm',
-                                activeColor: Color(0xFF06223a),
-                                fillColor: WidgetStatePropertyAll(
-                                  Color(0xFF06223a),
-                                ),
-                                contentPadding: EdgeInsets.zero,
+                              subtitle: Text(
+                                '(1 HR/AULA)\n',
+                                style: TextStyle(fontSize: 10),
                               ),
-                            ),
-                            Expanded(
-                              child: RadioListTile<String>(
-                                title: Text(
-                                  'SEMESTRAL',
-                                  style: TextStyle(
-                                    color: Color(0xFF06223a),
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                subtitle: Text(
-                                  '(18 HRS/AULA) \n(6 MÊS)',
-                                  style: TextStyle(fontSize: 10),
-                                ),
-                                value: 's',
-                                activeColor: Color(0xFF06223a),
-                                fillColor: WidgetStatePropertyAll(
-                                  Color(0xFF06223a),
-                                ),
-                                contentPadding: EdgeInsets.zero,
+                              value: 'a',
+                              activeColor: Color(0xFF06223a),
+                              fillColor: WidgetStatePropertyAll(
+                                Color(0xFF06223a),
                               ),
+                              contentPadding: EdgeInsets.zero,
                             ),
-                          ],
-                        ),
+                          ),
+                          Expanded(
+                            child: RadioListTile<String>(
+                              title: Text(
+                                'MENSAL',
+                                style: TextStyle(
+                                  color: Color(0xFF06223a),
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              subtitle: Text(
+                                '(8 HRS/AULA) \n(1 MÊS)',
+                                style: TextStyle(fontSize: 10),
+                              ),
+                              value: 'm',
+                              activeColor: Color(0xFF06223a),
+                              fillColor: WidgetStatePropertyAll(
+                                Color(0xFF06223a),
+                              ),
+                              contentPadding: EdgeInsets.zero,
+                            ),
+                          ),
+                          Expanded(
+                            child: RadioListTile<String>(
+                              title: Text(
+                                'SEMESTRAL',
+                                style: TextStyle(
+                                  color: Color(0xFF06223a),
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              subtitle: Text(
+                                '(18 HRS/AULA) \n(6 MÊS)',
+                                style: TextStyle(fontSize: 10),
+                              ),
+                              value: 's',
+                              activeColor: Color(0xFF06223a),
+                              fillColor: WidgetStatePropertyAll(
+                                Color(0xFF06223a),
+                              ),
+                              contentPadding: EdgeInsets.zero,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     TableCalendar(

@@ -201,7 +201,7 @@ class _Sidebar extends State<Sidebar> {
                                 },
                                 child: Padding(
                                   padding: MediaQuery.viewInsetsOf(context),
-                                  child: Container(
+                                  child: SizedBox(
                                     height:
                                         MediaQuery.sizeOf(context).height * 0.5,
                                     child: NewPassword(),

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_unnecessary_containers
+
 import 'package:flutter/material.dart';
 import 'package:instituto_braziel/components/_generic_alert.dart';
 
@@ -85,19 +87,17 @@ class _CreateAccount extends State<CreateAccount> {
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                    child: Container(
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Usuário',
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0xFFE6E6E6),
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.circular(12),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Usuário',
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xFFE6E6E6),
+                            width: 2,
                           ),
-                          prefixIcon: Icon(Icons.person),
+                          borderRadius: BorderRadius.circular(12),
                         ),
+                        prefixIcon: Icon(Icons.person),
                       ),
                     ),
                   ),
@@ -121,19 +121,17 @@ class _CreateAccount extends State<CreateAccount> {
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                    child: Container(
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Email',
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0xFFE6E6E6),
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.circular(12),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xFFE6E6E6),
+                            width: 2,
                           ),
-                          prefixIcon: Icon(Icons.email),
+                          borderRadius: BorderRadius.circular(12),
                         ),
+                        prefixIcon: Icon(Icons.email),
                       ),
                     ),
                   ),

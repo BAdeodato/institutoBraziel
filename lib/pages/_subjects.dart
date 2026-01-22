@@ -54,7 +54,7 @@ class _Subjects extends State<Subjects> {
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Container(
+                              SizedBox(
                                 width: MediaQuery.sizeOf(context).width * 0.9,
                                 child: TextFormField(
                                   decoration: InputDecoration(

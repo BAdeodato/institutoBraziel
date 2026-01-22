@@ -47,48 +47,46 @@ class _LoginState extends State<Login> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Container(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text('Colocar logomarca!!!'),
-                          RadioGroup<String>(
-                            groupValue: selectedUser,
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                selectedUser = newValue;
-                              });
-                            },
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                RadioListTile<String>(
-                                  title: Text(
-                                    'SOU PROFESSOR(A)',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  value: 'professor',
-                                  activeColor: Colors.white,
-                                  fillColor: WidgetStatePropertyAll(
-                                    Colors.white,
-                                  ),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text('Colocar logomarca!!!'),
+                        RadioGroup<String>(
+                          groupValue: selectedUser,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              selectedUser = newValue;
+                            });
+                          },
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              RadioListTile<String>(
+                                title: Text(
+                                  'SOU PROFESSOR(A)',
+                                  style: TextStyle(color: Colors.white),
                                 ),
-                                RadioListTile<String>(
-                                  title: Text(
-                                    'SOU ALUNO(A)',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  value: 'aluno',
-                                  activeColor: Colors.white,
-                                  fillColor: WidgetStatePropertyAll(
-                                    Colors.white,
-                                  ),
+                                value: 'professor',
+                                activeColor: Colors.white,
+                                fillColor: WidgetStatePropertyAll(
+                                  Colors.white,
                                 ),
-                              ],
-                            ),
+                              ),
+                              RadioListTile<String>(
+                                title: Text(
+                                  'SOU ALUNO(A)',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                value: 'aluno',
+                                activeColor: Colors.white,
+                                fillColor: WidgetStatePropertyAll(
+                                  Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                     Container(
                       decoration: BoxDecoration(
