@@ -58,23 +58,32 @@ class _Sidebar extends State<Sidebar> {
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        // color: FlutterFlowTheme.of(context).accent1,
-                        borderRadius: BorderRadius.circular(50),
-                        border: Border.all(color: Color(0xFF6F0606), width: 2),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(2),
-                        child: ClipRRect(
+                    InkWell(
+                      onTap: () {
+                        // TODO: DEPOIS PREENCHER AS INFORMAÇÕES DA PESSOA AO CARREGAR A PÁGINA, DE ACORDO COM O PERFIL LOGADO
+                        Navigator.pushNamed(context, 'profile');
+                      },
+                      child: Container(
+                        width: 80,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          // color: FlutterFlowTheme.of(context).accent1,
                           borderRadius: BorderRadius.circular(50),
-                          child: Image.network(
-                            'https://images.unsplash.com/photo-1624561172888-ac93c696e10c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NjJ8fHVzZXJzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-                            width: 80,
-                            height: 80,
-                            fit: BoxFit.cover,
+                          border: Border.all(
+                            color: Color(0xFF6F0606),
+                            width: 2,
+                          ),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(2),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: Image.network(
+                              'https://images.unsplash.com/photo-1624561172888-ac93c696e10c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NjJ8fHVzZXJzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
+                              width: 80,
+                              height: 80,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
@@ -82,21 +91,27 @@ class _Sidebar extends State<Sidebar> {
                     Expanded(
                       child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Andrew D.'),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                0,
-                                4,
-                                0,
-                                0,
+                        child: InkWell(
+                          onTap: () {
+                            // TODO: DEPOIS PREENCHER AS INFORMAÇÕES DA PESSOA AO CARREGAR A PÁGINA, DE ACORDO COM O PERFIL LOGADO
+                            Navigator.pushNamed(context, 'profile');
+                          },
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Andrew D.'),
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                  0,
+                                  4,
+                                  0,
+                                  0,
+                                ),
+                                child: Text('admin@gmail.com'),
                               ),
-                              child: Text('admin@gmail.com'),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -188,8 +203,7 @@ class _Sidebar extends State<Sidebar> {
                                   padding: MediaQuery.viewInsetsOf(context),
                                   child: Container(
                                     height:
-                                        MediaQuery.sizeOf(context).height *
-                                        0.5,
+                                        MediaQuery.sizeOf(context).height * 0.5,
                                     child: NewPassword(),
                                   ),
                                 ),

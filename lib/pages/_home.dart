@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:expandable/expandable.dart';
 import 'package:instituto_braziel/components/_sidebar.dart';
+import 'package:instituto_braziel/components/_teacher_card.dart';
+import 'package:instituto_braziel/models/_teacher_model.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -10,6 +11,22 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final List<TeacherModel> teachers = [
+    TeacherModel(id: '1', name: 'João Silva', subject: 'teacher'),
+    TeacherModel(id: '2', name: 'Maria Santos', subject: 'student'),
+    TeacherModel(id: '2', name: 'Maria Santos', subject: 'student'),
+    TeacherModel(id: '2', name: 'Maria Santos', subject: 'student'),
+    TeacherModel(id: '2', name: 'Maria Santos', subject: 'student'),
+    TeacherModel(id: '2', name: 'Maria Santos', subject: 'student'),
+  ];
+  List<TeacherModel> filteredTeacher = [];
+
+  @override
+  void initState() {
+    super.initState();
+    filteredTeacher = List.from(teachers);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,27 +90,53 @@ class _HomeState extends State<Home> {
                                     },
                                   ),
                                   SizedBox(width: 10),
-                                  Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'BEM VINDO(A)',
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                      Text(
-                                        'USUÁRIO',
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    ],
+                                  Builder(
+                                    builder: (context) {
+                                      return InkWell(
+                                        onTap: () async {
+                                          Scaffold.of(context).openDrawer();
+                                        },
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'BEM VINDO(A)',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            Text(
+                                              'USUÁRIO',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ],
                               ),
                               SizedBox(height: 20),
-                              Container(
+                              SizedBox(
                                 width: MediaQuery.sizeOf(context).width * 0.9,
                                 child: TextFormField(
+                                  onChanged: (value) {
+                                    setState(() {
+                                      filteredTeacher = teachers.where(
+                                        (teacher) =>
+                                            teacher.name.toLowerCase().contains(
+                                              value.toLowerCase(),
+                                            ) ||
+                                            teacher.subject.toLowerCase().contains(
+                                              value.toLowerCase(),
+                                            ),
+                                      ).toList();
+                                    });
+                                  },
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(
@@ -139,27 +182,35 @@ class _HomeState extends State<Home> {
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
                             children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0xFF06223A),
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(color: Color(0xFFE6E6E6)),
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Icon(
-                                      Icons.computer,
-                                      color: Colors.white,
-                                      size: 24,
+                              InkWell(
+                                onTap: () {
+                                  // Navigating and passing the string as an argument
+                                  Navigator.pushNamed(context, 'subjects');
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFF06223A),
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(
+                                      color: Color(0xFFE6E6E6),
                                     ),
-                                    Text(
-                                      'Online',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ],
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Icon(
+                                        Icons.computer,
+                                        color: Colors.white,
+                                        size: 24,
+                                      ),
+                                      Text(
+                                        'Online',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                               Container(
@@ -235,7 +286,7 @@ class _HomeState extends State<Home> {
                                 // Match the container radius for the ripple
                                 onTap: () {
                                   // Navigating and passing the string as an argument
-                                  Navigator.pushNamed(context, 'subjects');
+                                  // Navigator.pushNamed(context, 'subjects');
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
@@ -306,138 +357,34 @@ class _HomeState extends State<Home> {
                     SizedBox(height: 20),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
-                      child: ListView(
+                      child: ListView.builder(
                         padding: EdgeInsets.zero,
                         shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        children: [
-                          InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {},
-                            child: Container(
-                              height: 113.2,
-                              decoration: BoxDecoration(
-                                color: Color(0xFF06223A),
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: Color(0xFFE6E6E6)),
-                              ),
-                              child: Align(
-                                alignment: AlignmentDirectional(0, 1),
-                                child: InkWell(
-                                  onTap: () {
-                                    // Navigating and passing the string as an argument
-                                    Navigator.pushNamed(context, 'teacher');
-                                  },
-                                  child: Container(
-                                    width: double.infinity,
-                                    color: Color(0x00000000),
-                                    child: ExpandableNotifier(
-                                      initialExpanded: true,
-                                      child: ExpandablePanel(
-                                        header: Container(),
-                                        collapsed: Container(),
-                                        expanded: Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                12,
-                                                16,
-                                                12,
-                                                12,
-                                              ),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Container(
-                                                    width: 60,
-                                                    height: 60,
-                                                    clipBehavior:
-                                                        Clip.antiAlias,
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                    child: Image.network(
-                                                      'https://picsum.photos/seed/941/600',
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                  SizedBox(width: 20),
-                                                  Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      SizedBox(height: 20),
-                                                      Text(
-                                                        'PROF. 1',
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        'Matemática',
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                      Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          Icon(
-                                                            Icons.star,
-                                                            color: Color(
-                                                              0xFFF9BD05,
-                                                            ),
-                                                            size: 24,
-                                                          ),
-                                                          Text(
-                                                            '4.85',
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                            '(25 Feedbacks)',
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        theme: const ExpandableThemeData(
-                                          hasIcon: false,
-                                          tapHeaderToExpand: false,
-                                          tapBodyToCollapse: false,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                        physics:
+                            NeverScrollableScrollPhysics(), // important if nested
+                        itemCount: filteredTeacher.length,
+                        itemBuilder: (context, index) {
+                          final teacher = filteredTeacher[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 12),
+                            child: InkWell(
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () {},
+                              child: Container(
+                                height: 113.2,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFF06223A),
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(color: Color(0xFFE6E6E6)),
+                                ),
+                                child: TeacherCard(
+                                  teacher: teacher, // <-- pass data here
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          );
+                        },
                       ),
                     ),
                   ],

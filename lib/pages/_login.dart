@@ -1,10 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:instituto_braziel/components/_create_account.dart';
 import 'package:instituto_braziel/components/_forgot_password.dart';
 import 'package:instituto_braziel/components/_generic_alert.dart';
-import 'package:instituto_braziel/components/_new_password.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -24,6 +24,9 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   String? selectedUser;
+  final TextEditingController email = TextEditingController();
+  final TextEditingController password = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -136,18 +139,15 @@ class _LoginState extends State<Login> {
                                   0,
                                   16,
                                 ),
-                                child: Container(
-                                  child: TextFormField(
-                                    decoration: InputDecoration(
-                                      labelText: 'Email',
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          30.0,
-                                        ),
-                                        borderSide: BorderSide(),
-                                      ),
-                                      prefixIcon: Icon(Icons.email),
+                                child: TextFormField(
+                                  controller: email,
+                                  decoration: InputDecoration(
+                                    labelText: 'Email',
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                      borderSide: BorderSide(),
                                     ),
+                                    prefixIcon: Icon(Icons.email),
                                   ),
                                 ),
                               ),
@@ -158,18 +158,15 @@ class _LoginState extends State<Login> {
                                   0,
                                   16,
                                 ),
-                                child: Container(
-                                  child: TextFormField(
-                                    decoration: InputDecoration(
-                                      labelText: 'Senha',
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          30.0,
-                                        ),
-                                        borderSide: BorderSide(),
-                                      ),
-                                      prefixIcon: Icon(Icons.lock),
+                                child: TextFormField(
+                                  controller: password,
+                                  decoration: InputDecoration(
+                                    labelText: 'Senha',
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                      borderSide: BorderSide(),
                                     ),
+                                    prefixIcon: Icon(Icons.lock),
                                   ),
                                 ),
                               ),
@@ -204,7 +201,7 @@ class _LoginState extends State<Login> {
                                               padding: MediaQuery.viewInsetsOf(
                                                 context,
                                               ),
-                                              child: Container(
+                                              child: SizedBox(
                                                 height:
                                                     MediaQuery.sizeOf(
                                                       context,
@@ -249,7 +246,35 @@ class _LoginState extends State<Login> {
                                       );
                                       return;
                                     }
-                                    Navigator.pushNamed(context, 'home');
+                                    try {
+                                      UserCredential userCredential =
+                                          await _auth
+                                              .signInWithEmailAndPassword(
+                                                email: email.text.trim(),
+                                                password: password.text.trim(),
+                                              );
+
+                                      // Login successful
+                                      print(
+                                        'User logged in: ${userCredential.user?.email}',
+                                      );
+                                      Navigator.pushNamed(
+                                        context,
+                                        'home',
+                                      ); // Go to your home page
+                                    } on FirebaseAuthException catch (e) {
+                                      // Show error message
+                                      await showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return GenerericAlert(
+                                            message:
+                                                e.message ??
+                                                'Erro ao fazer login',
+                                          );
+                                        },
+                                      );
+                                    }
                                   },
                                   style: ButtonStyle(
                                     backgroundColor: WidgetStatePropertyAll(
@@ -410,7 +435,7 @@ class _LoginState extends State<Login> {
                                                         MediaQuery.viewInsetsOf(
                                                           context,
                                                         ),
-                                                    child: Container(
+                                                    child: SizedBox(
                                                       height:
                                                           MediaQuery.sizeOf(
                                                             context,

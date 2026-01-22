@@ -11,7 +11,7 @@ import 'pages/_login.dart';
 // import 'package:firebase_core/firebase_core.dart';
 // import 'firebase_options.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (kIsWeb) {
     await Firebase.initializeApp(
@@ -25,7 +25,7 @@ void main() async{
         measurementId: "G-803KH0JH0R",
       ),
     );
-  }else{
+  } else {
     await Firebase.initializeApp();
   }
   runApp(const MyApp());
@@ -73,7 +73,6 @@ class MyApp extends StatelessWidget {
         'profile': (context) => const Profile(),
         'subjects': (context) => const Subjects(),
         'subject': (context) => const Subject(),
-        'teacher': (context) => const Teacher(),
       },
     );
   }

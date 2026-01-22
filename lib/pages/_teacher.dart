@@ -1,13 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:instituto_braziel/models/_teacher_model.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class Teacher extends StatefulWidget {
-  const Teacher({super.key});
+  final TeacherModel teacher;
+  const Teacher({super.key, required this.teacher});
   @override
   State<Teacher> createState() => _Teacher();
 }
 
 class _Teacher extends State<Teacher> {
+  // TODO: MUDAR ESSA LISTA PARA SER UM MODEL, VISTO QUE A COR DAS HORAS LIVRES DEVEM VARIAR, OU COLOCAR COMO HABILITADO/DESABILITADO
+  final List<String> times = [
+    '09:00',
+    '09:30',
+    '10:00',
+    '10:30',
+    '11:00',
+    '11:30',
+    '12:00',
+    '13:00',
+    '13:30',
+    '14:00',
+    '14:30',
+    '15:00',
+    '15:30',
+    '16:00',
+    '16:30',
+    '17:00',
+  ];
+
+  // Track which time is selected
+  final Set<String> selectedTime = {};
   DateTime _focusedDay = DateTime.now();
   late DateTime _currentWeekStart;
   String? selectedOption;
@@ -28,6 +52,7 @@ class _Teacher extends State<Teacher> {
     _currentWeekStart = startOfWeek(now);
   }
 
+  @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
@@ -36,7 +61,7 @@ class _Teacher extends State<Teacher> {
         automaticallyImplyLeading: false,
         leading: IconButton(
           onPressed: () {
-            // Navigator.pushNamed(context, 'home');
+            Navigator.pop(context);
           },
           icon: Icon(Icons.arrow_back, color: Colors.white),
         ),
@@ -65,39 +90,55 @@ class _Teacher extends State<Teacher> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           SizedBox(width: 20),
-                          Container(
-                            width: 90,
-                            height: 90,
-                            clipBehavior: Clip.antiAlias,
-                            decoration: BoxDecoration(shape: BoxShape.circle),
-                            child: Image.network(
-                              'https://picsum.photos/seed/603/600',
-                              fit: BoxFit.cover,
+                          InkWell(
+                            onTap: () {
+                              // TODO: DEPOIS PREENCHER AS INFORMAÇÕES DA PESSOA AO CARREGAR A PÁGINA, DE ACORDO COM O PERFIL LOGADO
+                              Navigator.pushNamed(context, 'profile');
+                            },
+                            child: Container(
+                              width: 90,
+                              height: 90,
+                              clipBehavior: Clip.antiAlias,
+                              decoration: BoxDecoration(shape: BoxShape.circle),
+                              child: Image.network(
+                                'https://picsum.photos/seed/603/600',
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                           SizedBox(width: 20),
                           Column(
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [Text('Nome professor'), Text('SÉRIE')],
+                            children: [
+                              Text(widget.teacher.name),
+                              Text('SÉRIE'),
+                              Text(widget.teacher.subject),
+                            ],
                           ),
                         ],
                       ),
                     ),
-                    Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Divider(thickness: 2),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text('PERFIL'),
-                            SizedBox(width: 300),
-                            Icon(Icons.arrow_forward_ios, size: 24),
-                          ],
-                        ),
-                      ],
+                    InkWell(
+                      onTap: () {
+                        // TODO: DEPOIS PREENCHER AS INFORMAÇÕES DA PESSOA AO CARREGAR A PÁGINA, DE ACORDO COM O PERFIL LOGADO
+                        Navigator.pushNamed(context, 'profile');
+                      },
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Divider(thickness: 2),
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('PERFIL'),
+                              SizedBox(width: 300),
+                              Icon(Icons.arrow_forward_ios, size: 24),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                     Divider(thickness: 2),
                     Row(
@@ -139,9 +180,16 @@ class _Teacher extends State<Teacher> {
                               child: RadioListTile<String>(
                                 title: Text(
                                   'AVULSO',
-                                  style: TextStyle(color: Color(0xFF06223a),fontSize: 13, fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    color: Color(0xFF06223a),
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                                subtitle: Text('(1 HR/AULA)\n', style: TextStyle(fontSize: 10)),
+                                subtitle: Text(
+                                  '(1 HR/AULA)\n',
+                                  style: TextStyle(fontSize: 10),
+                                ),
                                 value: 'a',
                                 activeColor: Color(0xFF06223a),
                                 fillColor: WidgetStatePropertyAll(
@@ -154,9 +202,16 @@ class _Teacher extends State<Teacher> {
                               child: RadioListTile<String>(
                                 title: Text(
                                   'MENSAL',
-                                  style: TextStyle(color: Color(0xFF06223a),fontSize: 13, fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    color: Color(0xFF06223a),
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                                subtitle: Text('(8 HRS/AULA) \n(1 MÊS)', style: TextStyle(fontSize: 10),),
+                                subtitle: Text(
+                                  '(8 HRS/AULA) \n(1 MÊS)',
+                                  style: TextStyle(fontSize: 10),
+                                ),
                                 value: 'm',
                                 activeColor: Color(0xFF06223a),
                                 fillColor: WidgetStatePropertyAll(
@@ -169,9 +224,16 @@ class _Teacher extends State<Teacher> {
                               child: RadioListTile<String>(
                                 title: Text(
                                   'SEMESTRAL',
-                                  style: TextStyle(color: Color(0xFF06223a),fontSize: 13, fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    color: Color(0xFF06223a),
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                                subtitle: Text('(18 HRS/AULA) \n(6 MÊS)', style: TextStyle(fontSize: 10),),
+                                subtitle: Text(
+                                  '(18 HRS/AULA) \n(6 MÊS)',
+                                  style: TextStyle(fontSize: 10),
+                                ),
                                 value: 's',
                                 activeColor: Color(0xFF06223a),
                                 fillColor: WidgetStatePropertyAll(
@@ -192,239 +254,96 @@ class _Teacher extends State<Teacher> {
                       calendarFormat: CalendarFormat.week,
                       startingDayOfWeek: StartingDayOfWeek.monday,
                       availableCalendarFormats: {CalendarFormat.week: 'Week'},
+                      selectedDayPredicate: (day) {
+                        return isSameDay(_focusedDay, day);
+                      },
+
+                      onDaySelected: (selectedDay, focusedDay) {
+                        setState(() {
+                          _focusedDay = focusedDay;
+                        });
+                      },
                       calendarStyle: CalendarStyle(
                         todayDecoration: BoxDecoration(
                           color: Color(0xFF6F0606),
+                          shape: BoxShape.circle,
+                        ),
+                        selectedDecoration: BoxDecoration(
+                          color: Color(0xFF06223A),
                           shape: BoxShape.circle,
                         ),
                       ),
                     ),
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                        child: GridView(
-                          padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                        padding: const EdgeInsets.all(16.0),
+                        child: GridView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: times.length,
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 4,
-                                crossAxisSpacing: 60,
-                                childAspectRatio: 1,
+                                crossAxisSpacing: 20,
+                                mainAxisSpacing: 20,
+                                childAspectRatio: 2,
                               ),
-                          scrollDirection: Axis.vertical,
-                          children: [
-                            Container(
-                              width: 0,
-                              height: 12.7,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Align(
-                                alignment: AlignmentDirectional(0, 0),
-                                child: Text('09:00'),
-                              ),
-                            ),
-                            Container(
-                              width: 0,
-                              height: 12.7,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Align(
-                                alignment: AlignmentDirectional(0, 0),
-                                child: Text('09:30'),
-                              ),
-                            ),
-                            Container(
-                              width: 0,
-                              height: 12.7,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: Color(0xFF06223A)),
-                              ),
-                              child: Align(
-                                alignment: AlignmentDirectional(0, 0),
+                          itemBuilder: (context, index) {
+                            final time = times[index];
+                            final isSelected = selectedTime.contains(time);
+
+                            return GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  if (isSelected) {
+                                    selectedTime.remove(time); // deselect
+                                  } else {
+                                    selectedTime.add(time); // select
+                                  }
+                                });
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: isSelected
+                                      ? Color(0xFF06223A)
+                                      : Colors.white,
+                                  border: Border.all(color: Color(0xFF06223A)),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                alignment: Alignment.center,
                                 child: Text(
-                                  '10:00',
-                                  style: TextStyle(color: Color(0xFF06223A)),
+                                  time,
+                                  style: TextStyle(
+                                    color: isSelected
+                                        ? Colors.white
+                                        : Color(0xFF06223A),
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Container(
-                              width: 0,
-                              height: 12.7,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: Color(0xFF06223A)),
-                              ),
-                              child: Align(
-                                alignment: AlignmentDirectional(0, 0),
-                                child: Text(
-                                  '10:30',
-                                  style: TextStyle(color: Color(0xFF06223A)),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: 0,
-                              height: 12.7,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: Color(0xFF06223A)),
-                              ),
-                              child: Align(
-                                alignment: AlignmentDirectional(0, 0),
-                                child: Text(
-                                  '11:00',
-                                  style: TextStyle(color: Color(0xFF06223A)),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: 0,
-                              height: 12.7,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: Color(0xFF06223A)),
-                              ),
-                              child: Align(
-                                alignment: AlignmentDirectional(0, 0),
-                                child: Text(
-                                  '11:30',
-                                  style: TextStyle(color: Color(0xFF06223A)),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: 0,
-                              height: 12.7,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Align(
-                                alignment: AlignmentDirectional(0, 0),
-                                child: Text('12:00'),
-                              ),
-                            ),
-                            Container(
-                              width: 0,
-                              height: 12.7,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: Color(0xFF06223A)),
-                              ),
-                              child: Align(
-                                alignment: AlignmentDirectional(0, 0),
-                                child: Text(
-                                  '13:00',
-                                  style: TextStyle(color: Color(0xFF06223A)),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: 0,
-                              height: 12.7,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: Color(0xFF06223A)),
-                              ),
-                              child: Align(
-                                alignment: AlignmentDirectional(0, 0),
-                                child: Text(
-                                  '13:30',
-                                  style: TextStyle(color: Color(0xFF06223A)),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: 0,
-                              height: 12.7,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: Color(0xFF06223A)),
-                              ),
-                              child: Align(
-                                alignment: AlignmentDirectional(0, 0),
-                                child: Text(
-                                  '14:00',
-                                  style: TextStyle(color: Color(0xFF06223A)),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: 0,
-                              height: 12.7,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Align(
-                                alignment: AlignmentDirectional(0, 0),
-                                child: Text('14:30'),
-                              ),
-                            ),
-                            Container(
-                              width: 0,
-                              height: 12.7,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Align(
-                                alignment: AlignmentDirectional(0, 0),
-                                child: Text('15:00'),
-                              ),
-                            ),
-                            Container(
-                              width: 0,
-                              height: 12.7,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Align(
-                                alignment: AlignmentDirectional(0, 0),
-                                child: Text('15:30'),
-                              ),
-                            ),
-                            Container(
-                              width: 0,
-                              height: 12.7,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: Color(0xFF06223A)),
-                              ),
-                              child: Align(
-                                alignment: AlignmentDirectional(0, 0),
-                                child: Text(
-                                  '16:00',
-                                  style: TextStyle(color: Color(0xFF06223A)),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: 0,
-                              height: 12.7,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: Color(0xFF06223A)),
-                              ),
-                              child: Align(
-                                alignment: AlignmentDirectional(0, 0),
-                                child: Text(
-                                  '16:30',
-                                  style: TextStyle(color: Color(0xFF06223A)),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: 0,
-                              height: 12.7,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Align(
-                                alignment: AlignmentDirectional(0, 0),
-                                child: Text('17:00'),
-                              ),
-                            ),
-                          ],
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                      child: OutlinedButton(
+                        onPressed: () async {
+                          // Navigator.pushNamed(context, 'home');
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStatePropertyAll(
+                            Color(0xFF06223a),
+                          ),
+                          minimumSize: WidgetStatePropertyAll(Size(250, 50)),
+                          side: WidgetStateProperty.all(
+                            const BorderSide(color: Colors.transparent),
+                          ),
+                        ),
+                        child: Text(
+                          'CONTINUAR',
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                     ),

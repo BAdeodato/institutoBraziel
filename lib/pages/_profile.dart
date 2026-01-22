@@ -29,7 +29,7 @@ class _Profile extends State<Profile> {
         automaticallyImplyLeading: false,
         leading: IconButton(
           onPressed: () {
-            Navigator.pushNamed(context, 'home');
+            Navigator.pop(context);
           },
           icon: Icon(Icons.arrow_back, color: Colors.white),
         ),
