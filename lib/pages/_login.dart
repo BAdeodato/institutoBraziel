@@ -26,7 +26,7 @@ class _LoginState extends State<Login> {
   String? selectedUser;
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -246,35 +246,36 @@ class _LoginState extends State<Login> {
                                       );
                                       return;
                                     }
-                                    try {
-                                      UserCredential userCredential =
-                                          await _auth
-                                              .signInWithEmailAndPassword(
-                                                email: email.text.trim(),
-                                                password: password.text.trim(),
-                                              );
+                                    // try {
+                                    //   UserCredential userCredential =
+                                    //       await _auth
+                                    //           .signInWithEmailAndPassword(
+                                    //             email: email.text.trim(),
+                                    //             password: password.text.trim(),
+                                    //           );
 
-                                      // Login successful
-                                      print(
-                                        'User logged in: ${userCredential.user?.email}',
-                                      );
-                                      Navigator.pushNamed(
-                                        context,
-                                        'home',
-                                      ); // Go to your home page
-                                    } on FirebaseAuthException catch (e) {
-                                      // Show error message
-                                      await showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return GenerericAlert(
-                                            message:
-                                                e.message ??
-                                                'Erro ao fazer login',
-                                          );
-                                        },
-                                      );
-                                    }
+                                    //   // Login successful
+                                    //   print(
+                                    //     'User logged in: ${userCredential.user?.email}',
+                                    //   );
+                                    //   Navigator.pushNamed(
+                                    //     context,
+                                    //     'home',
+                                    //   ); // Go to your home page
+                                    // } on FirebaseAuthException catch (e) {
+                                    //   // Show error message
+                                    //   await showDialog(
+                                    //     context: context,
+                                    //     builder: (BuildContext context) {
+                                    //       return GenerericAlert(
+                                    //         message:
+                                    //             e.message ??
+                                    //             'Erro ao fazer login',
+                                    //       );
+                                    //     },
+                                    //   );
+                                    // }
+                                    Navigator.pushNamed(context, 'home');
                                   },
                                   style: ButtonStyle(
                                     backgroundColor: WidgetStatePropertyAll(
