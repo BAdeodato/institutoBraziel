@@ -40,6 +40,7 @@ class _CreateAccount extends State<CreateAccount> {
   );
 
   register() async {
+    // TODO: LEMBRAR DE PASSAR O RESTANTE DOS PARÂMETROS JÁ ADD NO FIREBASE
     try {
       await context.read<AuthService>().register(
         email.text,
