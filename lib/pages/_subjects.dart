@@ -23,58 +23,57 @@ class _Subjects extends State<Subjects> {
         centerTitle: false,
         elevation: 0,
       ),
-      body: Row(
+      body: Column(
         children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Color(0xFF6F0606),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 4,
+                  color: Color(0x33000000),
+                  offset: Offset(0, 2),
+                ),
+              ],
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(12),
+                bottomRight: Radius.circular(12),
+              ),
+            ),
+            child: Align(
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(5, 32, 5, 10),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width * 0.9,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              12,
+                            ), // Sets the border radius
+                          ),
+                          hintText: 'BUSCAR DISCIPLINA',
+                          filled: true,
+                          fillColor: Colors.white,
+                          suffixIcon: Icon(Icons.search),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
           Expanded(
             child: Container(
               alignment: Alignment(0, -1),
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Color(0xFF6F0606),
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 4,
-                            color: Color(0x33000000),
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(12),
-                          bottomRight: Radius.circular(12),
-                        ),
-                      ),
-                      child: Align(
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 32, 5, 10),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                width: MediaQuery.sizeOf(context).width * 0.9,
-                                child: TextFormField(
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(
-                                        12,
-                                      ), // Sets the border radius
-                                    ),
-                                    hintText: 'BUSCAR DISCIPLINA',
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    suffixIcon: Icon(Icons.search),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
                     SizedBox(height: 20),
                     Align(
                       alignment: AlignmentDirectional(-0.9, 0),

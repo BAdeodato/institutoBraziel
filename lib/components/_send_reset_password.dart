@@ -4,7 +4,12 @@ class SendResetPassword extends StatelessWidget {
   final String field;
   final String message;
   final IconData icon;
-  const SendResetPassword({super.key,required this.message, required this.field, required this.icon});
+  const SendResetPassword({
+    super.key,
+    required this.message,
+    required this.field,
+    required this.icon,
+  });
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -38,22 +43,16 @@ class SendResetPassword extends StatelessWidget {
                 children: [
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 24),
-                    child: Text(
-                      message,
-                      textAlign: TextAlign.center,
-                    ),
+                    child: Text(message, textAlign: TextAlign.center),
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                     child: TextFormField(
                       decoration: InputDecoration(
                         labelText: field,
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0xFFE6E6E6),
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(12),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: BorderSide(),
                         ),
                         prefixIcon: Icon(icon),
                       ),

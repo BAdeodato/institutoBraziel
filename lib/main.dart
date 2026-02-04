@@ -1,12 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:instituto_braziel/pages/_auth_check.dart';
 import 'package:instituto_braziel/pages/_home.dart';
 import 'package:instituto_braziel/pages/_profile.dart';
 import 'package:instituto_braziel/pages/_subject.dart';
 import 'package:instituto_braziel/pages/_subjects.dart';
-import 'package:instituto_braziel/pages/_teacher.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:instituto_braziel/services/auth_service.dart';
+import 'package:instituto_braziel/services/users_service.dart';
+import 'package:provider/provider.dart';
 import 'pages/_login.dart';
 // import 'package:firebase_core/firebase_core.dart';
 // import 'firebase_options.dart';
@@ -28,7 +31,21 @@ void main() async {
   } else {
     await Firebase.initializeApp();
   }
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<AuthService>(
+          lazy: false,
+          create: (_) => AuthService(),
+        ),
+        ProxyProvider<AuthService, UsersService>(
+          update: (_, authService, __) =>
+              UsersService(authService: authService),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -68,7 +85,8 @@ class MyApp extends StatelessWidget {
         Locale('pt', 'BR'), // Portuguese
       ],
       routes: {
-        '/': (context) => const Login(),
+        '/': (context) => const AuthCheck(),
+        '/login': (context) => const Login(),
         'home': (context) => const Home(),
         'profile': (context) => const Profile(),
         'subjects': (context) => const Subjects(),

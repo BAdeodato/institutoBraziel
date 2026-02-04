@@ -49,77 +49,72 @@ class _Subject extends State<Subject> {
         elevation: 0,
         title: Text(subjectName, style: TextStyle(color: Colors.white)),
       ),
-      body: Row(
+      body: Column(
         children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Color(0xFF6F0606),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 4,
+                  color: Color(0x33000000),
+                  offset: Offset(0, 2),
+                ),
+              ],
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(12),
+                bottomRight: Radius.circular(12),
+              ),
+            ),
+            child: Align(
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(5, 32, 5, 10),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width * 0.9,
+                      child: TextFormField(
+                        onChanged: (value) {
+                          setState(() {
+                            filteredTeacher = teachers
+                                .where(
+                                  (teacher) =>
+                                      teacher.name.toLowerCase().contains(
+                                        value.toLowerCase(),
+                                      ) ||
+                                      teacher.subject.toLowerCase().contains(
+                                        value.toLowerCase(),
+                                      ),
+                                )
+                                .toList();
+                          });
+                        },
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              12,
+                            ), // Sets the border radius
+                          ),
+                          hintText: 'BUSCAR PROFESSOR(A)',
+                          filled: true,
+                          fillColor: Colors.white,
+                          suffixIcon: Icon(Icons.search),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
           Expanded(
             child: Container(
               alignment: Alignment(0, -1),
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Color(0xFF6F0606),
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 4,
-                            color: Color(0x33000000),
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(12),
-                          bottomRight: Radius.circular(12),
-                        ),
-                      ),
-                      child: Align(
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 32, 5, 10),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                width: MediaQuery.sizeOf(context).width * 0.9,
-                                child: TextFormField(
-                                  onChanged: (value) {
-                                    setState(() {
-                                      filteredTeacher = teachers
-                                          .where(
-                                            (teacher) =>
-                                                teacher.name
-                                                    .toLowerCase()
-                                                    .contains(
-                                                      value.toLowerCase(),
-                                                    ) ||
-                                                teacher.subject
-                                                    .toLowerCase()
-                                                    .contains(
-                                                      value.toLowerCase(),
-                                                    ),
-                                          )
-                                          .toList();
-                                    });
-                                  },
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(
-                                        12,
-                                      ), // Sets the border radius
-                                    ),
-                                    hintText: 'BUSCAR PROFESSOR(A)',
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    suffixIcon: Icon(Icons.search),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
                     Align(
                       alignment: AlignmentDirectional(-0.9, 0),
                       child: Text(

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:instituto_braziel/components/_create_account.dart';
 import 'package:instituto_braziel/components/_forgot_password.dart';
 import 'package:instituto_braziel/components/_generic_alert.dart';
+import 'package:instituto_braziel/services/auth_service.dart';
+import 'package:instituto_braziel/services/users_service.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -24,9 +28,27 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   String? selectedUser;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
+    late Future<DocumentSnapshot<Map<String, dynamic>>> _userFuture;
+  bool isLogin = true;
   // final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _userFuture = context.read<UsersService>().getCurrentUser();
+  }
+
+    void _reloadUser() {
+    setState(() {
+      _userFuture = context.read<UsersService>().getCurrentUser();
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -68,9 +90,7 @@ class _LoginState extends State<Login> {
                                 ),
                                 value: 'professor',
                                 activeColor: Colors.white,
-                                fillColor: WidgetStatePropertyAll(
-                                  Colors.white,
-                                ),
+                                fillColor: WidgetStatePropertyAll(Colors.white),
                               ),
                               RadioListTile<String>(
                                 title: Text(
@@ -79,9 +99,7 @@ class _LoginState extends State<Login> {
                                 ),
                                 value: 'aluno',
                                 activeColor: Colors.white,
-                                fillColor: WidgetStatePropertyAll(
-                                  Colors.white,
-                                ),
+                                fillColor: WidgetStatePropertyAll(Colors.white),
                               ),
                             ],
                           ),
@@ -130,44 +148,76 @@ class _LoginState extends State<Login> {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                  0,
-                                  0,
-                                  0,
-                                  16,
-                                ),
-                                child: TextFormField(
-                                  controller: email,
-                                  decoration: InputDecoration(
-                                    labelText: 'Email',
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(30.0),
-                                      borderSide: BorderSide(),
+                              Form(
+                                key: formKey,
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                        0,
+                                        0,
+                                        0,
+                                        16,
+                                      ),
+                                      child: TextFormField(
+                                        controller: email,
+                                        decoration: InputDecoration(
+                                          labelText: 'Email',
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              30.0,
+                                            ),
+                                            borderSide: BorderSide(),
+                                          ),
+                                          prefixIcon: Icon(Icons.email),
+                                        ),
+                                        keyboardType:
+                                            TextInputType.emailAddress,
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return 'Favor informar o e-mail corretamente!';
+                                          }
+                                          return null;
+                                        },
+                                      ),
                                     ),
-                                    prefixIcon: Icon(Icons.email),
-                                  ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                        0,
+                                        0,
+                                        0,
+                                        16,
+                                      ),
+                                      child: TextFormField(
+                                        controller: password,
+                                        obscureText: true,
+                                        decoration: InputDecoration(
+                                          labelText: 'Senha',
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              30.0,
+                                            ),
+                                            borderSide: BorderSide(),
+                                          ),
+                                          prefixIcon: Icon(Icons.lock),
+                                        ),
+                                        keyboardType:
+                                            TextInputType.emailAddress,
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return 'Favor informar a senha!';
+                                          }
+                                          // else if (value.length < 8) {
+                                          //   return 'A senha deve conter no mínimo 8 caracteres!';
+                                          // }
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                  0,
-                                  0,
-                                  0,
-                                  16,
-                                ),
-                                child: TextFormField(
-                                  controller: password,
-                                  decoration: InputDecoration(
-                                    labelText: 'Senha',
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(30.0),
-                                      borderSide: BorderSide(),
-                                    ),
-                                    prefixIcon: Icon(Icons.lock),
-                                  ),
-                                ),
-                              ),
+
                               Align(
                                 alignment: AlignmentDirectional(1, 0),
                                 child: Padding(
@@ -244,36 +294,29 @@ class _LoginState extends State<Login> {
                                       );
                                       return;
                                     }
-                                    // try {
-                                    //   UserCredential userCredential =
-                                    //       await _auth
-                                    //           .signInWithEmailAndPassword(
-                                    //             email: email.text.trim(),
-                                    //             password: password.text.trim(),
-                                    //           );
+                                    if (!formKey.currentState!.validate())
+                                      return;
 
-                                    //   // Login successful
-                                    //   print(
-                                    //     'User logged in: ${userCredential.user?.email}',
-                                    //   );
-                                    //   Navigator.pushNamed(
-                                    //     context,
-                                    //     'home',
-                                    //   ); // Go to your home page
-                                    // } on FirebaseAuthException catch (e) {
-                                    //   // Show error message
-                                    //   await showDialog(
-                                    //     context: context,
-                                    //     builder: (BuildContext context) {
-                                    //       return GenerericAlert(
-                                    //         message:
-                                    //             e.message ??
-                                    //             'Erro ao fazer login',
-                                    //       );
-                                    //     },
-                                    //   );
-                                    // }
-                                    Navigator.pushNamed(context, 'home');
+                                    try {
+                                      await context.read<AuthService>().login(
+                                        selectedUser!,
+                                        email.text,
+                                        password.text,
+                                      );
+                                      _reloadUser();
+                                    } on AuthException catch (e) {
+                                      if (!context.mounted) return;
+
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).clearSnackBars();
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        SnackBar(content: Text(e.message)),
+                                      );
+                                    }
+                                    // Navigator.pushNamed(context, 'home');
                                   },
                                   style: ButtonStyle(
                                     backgroundColor: WidgetStatePropertyAll(
