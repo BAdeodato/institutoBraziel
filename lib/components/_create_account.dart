@@ -48,6 +48,10 @@ class _CreateAccount extends State<CreateAccount> {
         selectedUser,
         phoneMaskFormatter.getUnmaskedText(),
         userName.text,
+        '',
+        '',
+        '',
+        false,
       );
     } on AuthException catch (e) {
       if (!mounted) return;

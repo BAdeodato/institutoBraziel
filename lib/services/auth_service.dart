@@ -36,6 +36,10 @@ class AuthService extends ChangeNotifier {
     String userType,
     String phone,
     String userName,
+    String birth,
+    String fullName,
+    String id,
+    bool over18,
   ) async {
     try {
       final UserCredential userCredentials = await _auth
@@ -48,6 +52,10 @@ class AuthService extends ChangeNotifier {
           'userType': userType,
           'phone': phone,
           'userName': userName,
+          'birth':birth,
+          'fullName':fullName,
+          'id':id,
+          'over18':over18
         });
       }
       _getUser();
