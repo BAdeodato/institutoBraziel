@@ -52,10 +52,10 @@ class AuthService extends ChangeNotifier {
           'userType': userType,
           'phone': phone,
           'userName': userName,
-          'birth':birth,
-          'fullName':fullName,
-          'id':id,
-          'over18':over18
+          'birth': birth,
+          'fullName': fullName,
+          'id': id,
+          'over18': over18,
         });
       }
       _getUser();
@@ -65,6 +65,22 @@ class AuthService extends ChangeNotifier {
       } else if (e.code == "email-already-in-use") {
         throw AuthException("Este e-mail já está cadastrado!");
       }
+    }
+  }
+
+  Future<void> updateAuthData({String? email, String? password}) async {
+    final user = _auth.currentUser;
+
+    if (user == null) {
+      throw AuthException('Usuário não autenticado.');
+    }
+
+    if (email != null && email != user.email) {
+      await user.verifyBeforeUpdateEmail(email);
+    }
+
+    if (password != null && password.isNotEmpty) {
+      await user.updatePassword(password);
     }
   }
 

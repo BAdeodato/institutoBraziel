@@ -21,7 +21,7 @@ class Sidebar extends StatefulWidget {
 }
 
 class _Sidebar extends State<Sidebar> {
-  late Future<DocumentSnapshot<Map<String, dynamic>>> _userFuture;
+  late Future<DocumentSnapshot<Map<String, dynamic>>?> _userFuture;
   @override
   void initState() {
     super.initState();

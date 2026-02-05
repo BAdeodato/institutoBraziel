@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:instituto_braziel/components/_generic_alert.dart';
 import 'package:instituto_braziel/services/auth_service.dart';
 import 'package:instituto_braziel/services/users_service.dart';
+import 'package:instituto_braziel/utils/_input_formatters.dart';
 import 'package:provider/provider.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
@@ -33,11 +34,7 @@ class _CreateAccount extends State<CreateAccount> {
   final TextEditingController confirmPassword = TextEditingController();
   final TextEditingController phone = TextEditingController();
   final TextEditingController userName = TextEditingController();
-  late Future<DocumentSnapshot<Map<String, dynamic>>> _userFuture;
-  final phoneMaskFormatter = MaskTextInputFormatter(
-    mask: '(##)#####-####',
-    filter: {"#": RegExp(r'[0-9]')},
-  );
+  late Future<DocumentSnapshot<Map<String, dynamic>>?> _userFuture;
 
   register() async {
     // TODO: LEMBRAR DE PASSAR O RESTANTE DOS PARÂMETROS JÁ ADD NO FIREBASE
@@ -46,7 +43,7 @@ class _CreateAccount extends State<CreateAccount> {
         email.text,
         confirmPassword.text,
         selectedUser,
-        phoneMaskFormatter.getUnmaskedText(),
+        phone.text,
         userName.text,
         '',
         '',
@@ -68,6 +65,7 @@ class _CreateAccount extends State<CreateAccount> {
   }
 
   void _reloadUser() {
+    if (!mounted) return;
     setState(() {
       _userFuture = context.read<UsersService>().getCurrentUser();
     });
@@ -171,7 +169,7 @@ class _CreateAccount extends State<CreateAccount> {
                             child: TextFormField(
                               controller: phone,
                               keyboardType: TextInputType.phone,
-                              inputFormatters: [phoneMaskFormatter],
+                              inputFormatters: [AppInputFormatters.phone()],
                               decoration: InputDecoration(
                                 labelText: 'Celular',
                                 border: OutlineInputBorder(
@@ -184,7 +182,7 @@ class _CreateAccount extends State<CreateAccount> {
                                 if (value == null || value.isEmpty) {
                                   return 'Phone number is required';
                                 }
-                                if (!phoneMaskFormatter.isFill()) {
+                                if (!AppInputFormatters.phone().isFill()) {
                                   return 'Enter a valid phone number';
                                 }
                                 return null;

@@ -25,7 +25,7 @@ class _HomeState extends State<Home> {
     TeacherModel(id: '2', name: 'Maria Santos', subject: 'student'),
   ];
   List<TeacherModel> filteredTeacher = [];
-  late Future<DocumentSnapshot<Map<String, dynamic>>> _userFuture;
+  late Future<DocumentSnapshot<Map<String, dynamic>>?> _userFuture;
 
   @override
   void initState() {
@@ -45,6 +45,7 @@ class _HomeState extends State<Home> {
   }
 
   void _reloadUser() {
+    if (!mounted) return;
     setState(() {
       _userFuture = context.read<UsersService>().getCurrentUser();
     });
@@ -62,7 +63,7 @@ class _HomeState extends State<Home> {
     if (auth.isLoading) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
-    return FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+    return FutureBuilder<DocumentSnapshot<Map<String, dynamic>>?>(
       future: _userFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {

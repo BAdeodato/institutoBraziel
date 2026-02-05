@@ -31,7 +31,7 @@ class _LoginState extends State<Login> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
-    late Future<DocumentSnapshot<Map<String, dynamic>>> _userFuture;
+  late Future<DocumentSnapshot<Map<String, dynamic>>?> _userFuture;
   bool isLogin = true;
   // final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -42,12 +42,12 @@ class _LoginState extends State<Login> {
     _userFuture = context.read<UsersService>().getCurrentUser();
   }
 
-    void _reloadUser() {
+  void _reloadUser() {
+    if (!mounted) return;
     setState(() {
       _userFuture = context.read<UsersService>().getCurrentUser();
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
