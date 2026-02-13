@@ -182,7 +182,7 @@ class _CreateAccount extends State<CreateAccount> {
                                 if (value == null || value.isEmpty) {
                                   return 'Phone number is required';
                                 }
-                                if (!AppInputFormatters.phone().isFill()) {
+                                if (value.length != 14) {
                                   return 'Enter a valid phone number';
                                 }
                                 return null;
