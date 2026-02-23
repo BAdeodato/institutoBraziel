@@ -294,8 +294,9 @@ class _LoginState extends State<Login> {
                                       );
                                       return;
                                     }
-                                    if (!formKey.currentState!.validate())
+                                    if (!formKey.currentState!.validate()) {
                                       return;
+                                    }
 
                                     try {
                                       await context.read<AuthService>().login(

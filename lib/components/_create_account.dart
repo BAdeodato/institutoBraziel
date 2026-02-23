@@ -246,7 +246,7 @@ class _CreateAccount extends State<CreateAccount> {
                     padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
                     child: OutlinedButton(
                       onPressed: () async {
-                        if (selectedUser == null || selectedUser == '') {
+                        if (selectedUser == '') {
                           await showDialog(
                             context: context,
                             builder: (BuildContext context) {
