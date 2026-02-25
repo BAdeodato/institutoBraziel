@@ -17,12 +17,12 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final List<TeacherModel> teachers = [
-    TeacherModel(id: '1', name: 'João Silva', subject: 'teacher'),
-    TeacherModel(id: '2', name: 'Maria Santos', subject: 'student'),
-    TeacherModel(id: '2', name: 'Maria Santos', subject: 'student'),
-    TeacherModel(id: '2', name: 'Maria Santos', subject: 'student'),
-    TeacherModel(id: '2', name: 'Maria Santos', subject: 'student'),
-    TeacherModel(id: '2', name: 'Maria Santos', subject: 'student'),
+    TeacherModel(id: '1', name: 'João Silva'),
+    TeacherModel(id: '2', name: 'Maria Santos'),
+    TeacherModel(id: '2', name: 'Maria Santos'),
+    TeacherModel(id: '2', name: 'Maria Santos'),
+    TeacherModel(id: '2', name: 'Maria Santos'),
+    TeacherModel(id: '2', name: 'Maria Santos'),
   ];
   List<TeacherModel> filteredTeacher = [];
   late Future<DocumentSnapshot<Map<String, dynamic>>?> _userFuture;
@@ -171,10 +171,10 @@ class _HomeState extends State<Home> {
                                       (teacher) =>
                                           teacher.name.toLowerCase().contains(
                                             value.toLowerCase(),
-                                          ) ||
-                                          teacher.subject
-                                              .toLowerCase()
-                                              .contains(value.toLowerCase()),
+                                          ) 
+                                          // teacher.subject
+                                          //     .toLowerCase()
+                                          //     .contains(value.toLowerCase()),
                                     )
                                     .toList();
                               });

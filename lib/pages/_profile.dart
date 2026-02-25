@@ -23,7 +23,6 @@ class Profile extends StatefulWidget {
 }
 
 class _Profile extends State<Profile> {
-  bool switchValue = false;
   late Future<DocumentSnapshot<Map<String, dynamic>>?> _userFuture;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
@@ -59,6 +58,31 @@ class _Profile extends State<Profile> {
         final data = snapshot.data!.data();
         final TextEditingController fullName = TextEditingController(
           text: data?['fullName'] ?? '',
+        );
+        bool switchValue = data?['over18'] ?? false;
+        final TextEditingController subject = TextEditingController(
+          text: data?['subject'] ?? '',
+        );
+        final TextEditingController school = TextEditingController(
+          text: data?['school'] ?? '',
+        );
+        final TextEditingController schoolYear = TextEditingController(
+          text: data?['schoolYear'] ?? '',
+        );
+        final TextEditingController relativesName = TextEditingController(
+          text: data?['relativesName'] ?? '',
+        );
+        final TextEditingController relativesPhone = TextEditingController(
+          text: data?['relativesPhone'] ?? '',
+        );
+        final TextEditingController relativesBirth = TextEditingController(
+          text: data?['relativesBirth'] ?? '',
+        );
+        final TextEditingController relativesEmail = TextEditingController(
+          text: data?['relativesEmail'] ?? '',
+        );
+        final TextEditingController relativesCpf = TextEditingController(
+          text: data?['relativesId'] ?? '',
         );
         final TextEditingController birth = TextEditingController(
           text: data?['birth'] ?? '',
@@ -231,6 +255,41 @@ class _Profile extends State<Profile> {
                                         ),
                                       ),
                                     ),
+                                    data?['userType'] == 'professor'
+                                        ? Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  16,
+                                                ),
+
+                                            child: SizedBox(
+                                              width: double.infinity,
+                                              child: TextFormField(
+                                                controller: subject,
+                                                autofocus: true,
+                                                obscureText: false,
+                                                decoration: InputDecoration(
+                                                  labelText: 'Matéria',
+                                                  alignLabelWithHint: false,
+                                                  filled: true,
+                                                  border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          30.0,
+                                                        ),
+                                                    borderSide: BorderSide(),
+                                                  ),
+                                                  prefixIcon: Icon(Icons.abc),
+                                                ),
+                                                keyboardType:
+                                                    TextInputType.text,
+                                              ),
+                                            ),
+                                          )
+                                        : SizedBox.shrink(),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                         0,
@@ -403,6 +462,7 @@ class _Profile extends State<Profile> {
                                                 child: SizedBox(
                                                   width: double.infinity,
                                                   child: TextFormField(
+                                                    controller: school,
                                                     autofocus: true,
                                                     obscureText: false,
                                                     decoration: InputDecoration(
@@ -421,8 +481,8 @@ class _Profile extends State<Profile> {
                                                         FontAwesomeIcons.school,
                                                       ),
                                                     ),
-                                                    // keyboardType:
-                                                    //     TextInputType.emailAddress,
+                                                    keyboardType:
+                                                        TextInputType.text,
                                                   ),
                                                 ),
                                               ),
@@ -437,8 +497,7 @@ class _Profile extends State<Profile> {
                                                 child: SizedBox(
                                                   width: double.infinity,
                                                   child: TextFormField(
-                                                    // controller: _model.emailAddressTextController7,
-                                                    // focusNode: _model.emailAddressFocusNode7,
+                                                    controller: schoolYear,
                                                     autofocus: true,
                                                     obscureText: false,
                                                     decoration: InputDecoration(
@@ -458,8 +517,8 @@ class _Profile extends State<Profile> {
                                                             .onetwothree_outlined,
                                                       ),
                                                     ),
-                                                    // keyboardType:
-                                                    //     TextInputType.emailAddress,
+                                                    keyboardType:
+                                                        TextInputType.number,
                                                   ),
                                                 ),
                                               ),
@@ -511,8 +570,7 @@ class _Profile extends State<Profile> {
                                                 child: SizedBox(
                                                   width: double.infinity,
                                                   child: TextFormField(
-                                                    // controller: _model.emailAddressTextController8,
-                                                    // focusNode: _model.emailAddressFocusNode8,
+                                                    controller: relativesName,
                                                     autofocus: true,
                                                     obscureText: false,
                                                     decoration: InputDecoration(
@@ -532,8 +590,8 @@ class _Profile extends State<Profile> {
                                                         Icons.person,
                                                       ),
                                                     ),
-                                                    // keyboardType:
-                                                    //     TextInputType.emailAddress,
+                                                    keyboardType:
+                                                        TextInputType.text,
                                                   ),
                                                 ),
                                               ),
@@ -548,8 +606,7 @@ class _Profile extends State<Profile> {
                                                 child: SizedBox(
                                                   width: double.infinity,
                                                   child: TextFormField(
-                                                    // controller: _model.emailAddressTextController9,
-                                                    // focusNode: _model.emailAddressFocusNode9,
+                                                    controller: relativesBirth,
                                                     autofocus: true,
                                                     obscureText: false,
                                                     decoration: InputDecoration(
@@ -585,8 +642,7 @@ class _Profile extends State<Profile> {
                                                 child: SizedBox(
                                                   width: double.infinity,
                                                   child: TextFormField(
-                                                    // controller: _model.emailAddressTextController10,
-                                                    // focusNode: _model.emailAddressFocusNode10,
+                                                    controller: relativesPhone,
                                                     autofocus: true,
                                                     obscureText: false,
                                                     decoration: InputDecoration(
@@ -622,8 +678,7 @@ class _Profile extends State<Profile> {
                                                 child: SizedBox(
                                                   width: double.infinity,
                                                   child: TextFormField(
-                                                    // controller: _model.emailAddressTextController11,
-                                                    // focusNode: _model.emailAddressFocusNode11,
+                                                    controller: relativesEmail,
                                                     autofocus: true,
                                                     obscureText: false,
                                                     decoration: InputDecoration(
@@ -660,7 +715,7 @@ class _Profile extends State<Profile> {
                                                 child: SizedBox(
                                                   width: double.infinity,
                                                   child: TextFormField(
-                                                    // controller: cpfResponsavel,
+                                                    controller: relativesCpf,
                                                     autofocus: true,
                                                     obscureText: false,
                                                     inputFormatters: [
@@ -747,6 +802,14 @@ class _Profile extends State<Profile> {
                                 await context.read<UsersService>().update(
                                   birth: birth.text,
                                   fullName: fullName.text,
+                                  subject: subject.text,
+                                  school: school.text,
+                                  schoolYear: schoolYear.text,
+                                  relativesName: relativesName.text,
+                                  relativesPhone: relativesPhone.text,
+                                  relativesBirth: relativesBirth.text,
+                                  relativesEmail: relativesEmail.text,
+                                  relativesId: relativesCpf.text,
                                   id: cpf.text,
                                   over18: switchValue,
                                   phone: phone.text,

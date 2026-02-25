@@ -113,7 +113,7 @@ class _Teacher extends State<Teacher> {
                             children: [
                               Text(widget.teacher.name),
                               Text('SÉRIE'),
-                              Text(widget.teacher.subject),
+                              // Text(widget.teacher.subject),
                             ],
                           ),
                         ],

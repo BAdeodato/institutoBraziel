@@ -58,10 +58,10 @@ class TeacherCard extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(color: Colors.white),
                             ),
-                            Text(
-                              teacher.subject,
-                              style: TextStyle(color: Colors.white),
-                            ),
+                            // Text(
+                            //   teacher.subject,
+                            //   style: TextStyle(color: Colors.white),
+                            // ),
                             Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [
