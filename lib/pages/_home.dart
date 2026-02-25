@@ -168,13 +168,12 @@ class _HomeState extends State<Home> {
                               setState(() {
                                 filteredTeacher = teachers
                                     .where(
-                                      (teacher) =>
-                                          teacher.name.toLowerCase().contains(
-                                            value.toLowerCase(),
-                                          ) 
-                                          // teacher.subject
-                                          //     .toLowerCase()
-                                          //     .contains(value.toLowerCase()),
+                                      (teacher) => teacher.name
+                                          .toLowerCase()
+                                          .contains(value.toLowerCase()),
+                                      // teacher.subject
+                                      //     .toLowerCase()
+                                      //     .contains(value.toLowerCase()),
                                     )
                                     .toList();
                               });
@@ -422,37 +421,75 @@ class _HomeState extends State<Home> {
                         SizedBox(height: 20),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
-                          child: ListView.builder(
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            physics:
-                                NeverScrollableScrollPhysics(), // important if nested
-                            itemCount: filteredTeacher.length,
-                            itemBuilder: (context, index) {
-                              final teacher = filteredTeacher[index];
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 12),
-                                child: InkWell(
-                                  splashColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () {},
-                                  child: Container(
-                                    height: 113.2,
-                                    decoration: BoxDecoration(
-                                      color: Color(0xFF06223A),
-                                      borderRadius: BorderRadius.circular(12),
-                                      border: Border.all(
-                                        color: Color(0xFFE6E6E6),
+                          child:
+                              StreamBuilder<
+                                QuerySnapshot<Map<String, dynamic>>
+                              >(
+                                stream: FirebaseFirestore.instance
+                                    .collection('users')
+                                    .where('userType', isEqualTo: 'professor')
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  }
+
+                                  if (snapshot.hasError) {
+                                    return Center(
+                                      child: Text('Error: ${snapshot.error}'),
+                                    );
+                                  }
+
+                                  final professors = snapshot.data!.docs;
+
+                                  if (professors.isEmpty) {
+                                    return const Center(
+                                      child: Text(
+                                        "Nenhum professor encontrado",
                                       ),
-                                    ),
-                                    child: TeacherCard(
-                                      teacher: teacher, // <-- pass data here
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
+                                    );
+                                  }
+
+                                  return ListView.builder(
+                                    padding: EdgeInsets.zero,
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: professors.length,
+                                    itemBuilder: (context, index) {
+                                      final data = professors[index].data();
+
+                                      return Padding(
+                                        padding: const EdgeInsets.only(
+                                          bottom: 12,
+                                        ),
+                                        child: InkWell(
+                                          onTap: () {},
+                                          child: Container(
+                                            height: 113.2,
+                                            decoration: BoxDecoration(
+                                              color: Color(0xFF06223A),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              border: Border.all(
+                                                color: Color(0xFFE6E6E6),
+                                              ),
+                                            ),
+                                            child: TeacherCard(
+                                              teacher: TeacherModel(
+                                                id: professors[index].id,
+                                                name: data['userName'] ?? '', 
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
                         ),
                       ],
                     ),
