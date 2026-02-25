@@ -46,6 +46,7 @@ class AuthService extends ChangeNotifier {
     String relativesBirth,
     String relativesEmail,
     String relativesId,
+    String period,
     String id,
     bool over18,
   ) async {
@@ -70,6 +71,7 @@ class AuthService extends ChangeNotifier {
           'relativesBirth': relativesBirth,
           'relativesEmail': relativesEmail,
           'relativesId': relativesId,
+          'period': period,
           'id': id,
           'over18': over18,
         });

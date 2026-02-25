@@ -25,6 +25,17 @@ class Profile extends StatefulWidget {
 class _Profile extends State<Profile> {
   late Future<DocumentSnapshot<Map<String, dynamic>>?> _userFuture;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  String? selectedPeriod;
+  bool _initialized = false;
+  // ✅ Static list
+  final List<String> periodList = [
+    'teste1',
+    'teste2',
+    'teste3',
+    'teste4',
+    'teste5',
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -60,6 +71,10 @@ class _Profile extends State<Profile> {
           text: data?['fullName'] ?? '',
         );
         bool switchValue = data?['over18'] ?? false;
+        if (!_initialized) {
+          selectedPeriod = data?['period'];
+          _initialized = true;
+        }
         final TextEditingController subject = TextEditingController(
           text: data?['subject'] ?? '',
         );
@@ -106,7 +121,7 @@ class _Profile extends State<Profile> {
             automaticallyImplyLeading: false,
             leading: IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, 'home');
+                Navigator.pop(context);
               },
               icon: Icon(Icons.arrow_back, color: Colors.white),
             ),
@@ -448,6 +463,46 @@ class _Profile extends State<Profile> {
                                         ),
                                       ),
                                     ),
+                                    data?['userType'] == 'professor'
+                                        ? Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  16,
+                                                ),
+                                            child:
+                                                DropdownButtonFormField<String>(
+                                                  initialValue: selectedPeriod,
+                                                  decoration: InputDecoration(
+                                                    labelText:
+                                                        'Selecione uma série',
+                                                    border: OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                            12,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                  items: periodList.map((
+                                                    subject,
+                                                  ) {
+                                                    return DropdownMenuItem<
+                                                      String
+                                                    >(
+                                                      value: subject,
+                                                      child: Text(subject),
+                                                    );
+                                                  }).toList(),
+                                                  onChanged: (value) async {
+                                                    setState(() {
+                                                      selectedPeriod = value;
+                                                    });
+                                                  },
+                                                ),
+                                          )
+                                        : SizedBox.shrink(),
                                     data?['userType'] == 'aluno'
                                         ? Column(
                                             children: [
@@ -810,6 +865,7 @@ class _Profile extends State<Profile> {
                                   relativesBirth: relativesBirth.text,
                                   relativesEmail: relativesEmail.text,
                                   relativesId: relativesCpf.text,
+                                  period: selectedPeriod,
                                   id: cpf.text,
                                   over18: switchValue,
                                   phone: phone.text,

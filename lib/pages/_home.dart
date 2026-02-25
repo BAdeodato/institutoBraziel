@@ -16,21 +16,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final List<TeacherModel> teachers = [
-    TeacherModel(id: '1', name: 'João Silva'),
-    TeacherModel(id: '2', name: 'Maria Santos'),
-    TeacherModel(id: '2', name: 'Maria Santos'),
-    TeacherModel(id: '2', name: 'Maria Santos'),
-    TeacherModel(id: '2', name: 'Maria Santos'),
-    TeacherModel(id: '2', name: 'Maria Santos'),
-  ];
-  List<TeacherModel> filteredTeacher = [];
   late Future<DocumentSnapshot<Map<String, dynamic>>?> _userFuture;
 
   @override
   void initState() {
     super.initState();
-    filteredTeacher = List.from(teachers);
     _userFuture = context.read<UsersService>().getCurrentUser();
   }
 
@@ -161,36 +151,6 @@ class _HomeState extends State<Home> {
                           ],
                         ),
                         SizedBox(height: 20),
-                        SizedBox(
-                          width: MediaQuery.sizeOf(context).width * 0.9,
-                          child: TextFormField(
-                            onChanged: (value) {
-                              setState(() {
-                                filteredTeacher = teachers
-                                    .where(
-                                      (teacher) => teacher.name
-                                          .toLowerCase()
-                                          .contains(value.toLowerCase()),
-                                      // teacher.subject
-                                      //     .toLowerCase()
-                                      //     .contains(value.toLowerCase()),
-                                    )
-                                    .toList();
-                              });
-                            },
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(
-                                  12,
-                                ), // Sets the border radius
-                              ),
-                              hintText: 'BUSCAR PROFESSOR(A)',
-                              filled: true,
-                              fillColor: Colors.white,
-                              suffixIcon: Icon(Icons.search),
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ),
@@ -480,7 +440,9 @@ class _HomeState extends State<Home> {
                                             child: TeacherCard(
                                               teacher: TeacherModel(
                                                 id: professors[index].id,
-                                                name: data['userName'] ?? '', 
+                                                name: data['fullName'] ?? '',
+                                                subject: data['subject'] ?? '',
+                                                period: data['period'] ?? '',
                                               ),
                                             ),
                                           ),

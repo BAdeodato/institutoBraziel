@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instituto_braziel/components/_rating_card.dart';
 import 'package:instituto_braziel/models/_teacher_model.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -112,8 +113,8 @@ class _Teacher extends State<Teacher> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(widget.teacher.name),
-                              Text('SÉRIE'),
-                              // Text(widget.teacher.subject),
+                              Text((widget.teacher.subject ?? '').toUpperCase()),
+                              Text(widget.teacher.period ?? ''),
                             ],
                           ),
                         ],
@@ -141,14 +142,44 @@ class _Teacher extends State<Teacher> {
                       ),
                     ),
                     Divider(thickness: 2),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('AVALIAÇÕES'),
-                        SizedBox(width: 260),
-                        Icon(Icons.arrow_forward_ios, size: 24),
-                      ],
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        await showModalBottomSheet(
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          enableDrag: false,
+                          context: context,
+                          builder: (context) {
+                            return GestureDetector(
+                              onTap: () {
+                                FocusScope.of(context).unfocus();
+                                FocusManager.instance.primaryFocus?.unfocus();
+                              },
+                              child: Padding(
+                                padding: MediaQuery.viewInsetsOf(context),
+                                child: SizedBox(
+                                  height:
+                                      MediaQuery.sizeOf(context).height * 0.65,
+                                  child: RatingCard(),
+                                ),
+                              ),
+                            );
+                          },
+                        ).then((value) => setState(() {}));
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('AVALIAÇÕES'),
+                          SizedBox(width: 260),
+                          Icon(Icons.arrow_forward_ios, size: 24),
+                        ],
+                      ),
                     ),
                     Divider(thickness: 2),
                     Row(

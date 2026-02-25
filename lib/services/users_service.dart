@@ -68,6 +68,7 @@ class UsersService {
     String? relativesBirth,
     String? relativesEmail,
     String? relativesId,
+    String? period,
     String? id,
     bool? over18,
   }) async {
@@ -84,6 +85,7 @@ class UsersService {
       if (relativesBirth != null) 'relativesBirth': relativesBirth,
       if (relativesEmail != null) 'relativesEmail': relativesEmail,
       if (relativesId != null) 'relativesId': relativesId,
+      if (period != null) 'period': period,
       if (id != null) 'id': id,
       if (over18 != null) 'over18': over18,
     });

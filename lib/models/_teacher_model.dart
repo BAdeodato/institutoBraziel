@@ -2,19 +2,22 @@
 class TeacherModel {
   final String id;
   final String name;
-  // final String subject;
+  String? subject;
+  String? period;
 
   TeacherModel({
     required this.id,
-    required this.name
-    // required this.subject,
+    required this.name,
+    this.subject,
+    this.period,
   });
 
   factory TeacherModel.fromMap(String id, Map<String, dynamic> data) {
     return TeacherModel(
       id: id,
-      name: data['fullName'] ?? ''
-      // subject: data['subject'] ?? '',
+      name: data['fullName'] ?? '',
+      subject: data['subject'] ?? '',
+      period: data['period'] ?? '',
     );
   }
 }
