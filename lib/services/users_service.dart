@@ -23,6 +23,7 @@ class UsersService {
     return _db.collection('users').doc(user.uid).get();
   }
 
+
   Future<QuerySnapshot<Map<String, dynamic>>?> getUsers({
     String? userType,
     String? subject,
@@ -69,13 +70,14 @@ class UsersService {
     String? relativesEmail,
     String? relativesId,
     String? period,
+    String? photoUrl,
     String? id,
     bool? over18,
   }) async {
     await _db.collection('users').doc(_getUid()).update({
       if (phone != null) 'phone': phone,
       if (userName != null) 'userName': userName,
-      if (userName != null) 'subject': subject!.toLowerCase(),
+      if (subject != null) 'subject': subject.toLowerCase(),
       if (birth != null) 'birth': birth,
       if (fullName != null) 'fullName': fullName,
       if (school != null) 'school': school,
@@ -86,6 +88,7 @@ class UsersService {
       if (relativesEmail != null) 'relativesEmail': relativesEmail,
       if (relativesId != null) 'relativesId': relativesId,
       if (period != null) 'period': period,
+      if (photoUrl != null) 'photoUrl': photoUrl,
       if (id != null) 'id': id,
       if (over18 != null) 'over18': over18,
     });

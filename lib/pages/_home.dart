@@ -115,9 +115,13 @@ class _HomeState extends State<Home> {
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                     ),
-                                    child: Image.network(
-                                      'https://picsum.photos/seed/61/600',
-                                      fit: BoxFit.cover,
+                                    child: Container(
+                                      color: Colors.grey.shade200,
+                                      child: const Icon(
+                                        Icons.person,
+                                        size: 40,
+                                        color: Color(0xFF6F0606),
+                                      ),
                                     ),
                                   ),
                                 );
@@ -367,92 +371,126 @@ class _HomeState extends State<Home> {
                           ],
                         ),
                         SizedBox(height: 20),
-                        Align(
-                          alignment: AlignmentDirectional(-0.9, 0),
-                          child: Text(
-                            'TOP PROFESSORES',
-                            style: TextStyle(
-                              color: Color(0xFF6F0606),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 30,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
-                          child:
-                              StreamBuilder<
-                                QuerySnapshot<Map<String, dynamic>>
-                              >(
-                                stream: FirebaseFirestore.instance
-                                    .collection('users')
-                                    .where('userType', isEqualTo: 'professor')
-                                    .snapshots(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return const Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  }
-
-                                  if (snapshot.hasError) {
-                                    return Center(
-                                      child: Text('Error: ${snapshot.error}'),
-                                    );
-                                  }
-
-                                  final professors = snapshot.data!.docs;
-
-                                  if (professors.isEmpty) {
-                                    return const Center(
-                                      child: Text(
-                                        "Nenhum professor encontrado",
+                        data?['userType'] == 'aluno'
+                            ? Column(
+                                children: [
+                                  Align(
+                                    alignment: AlignmentDirectional(-0.9, 0),
+                                    child: Text(
+                                      'TOP PROFESSORES',
+                                      style: TextStyle(
+                                        color: Color(0xFF6F0606),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 30,
                                       ),
-                                    );
-                                  }
+                                    ),
+                                  ),
+                                  SizedBox(height: 20),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                      20,
+                                      0,
+                                      20,
+                                      0,
+                                    ),
+                                    child:
+                                        StreamBuilder<
+                                          QuerySnapshot<Map<String, dynamic>>
+                                        >(
+                                          stream: FirebaseFirestore.instance
+                                              .collection('users')
+                                              .where(
+                                                'userType',
+                                                isEqualTo: 'professor',
+                                              )
+                                              .snapshots(),
+                                          builder: (context, snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting) {
+                                              return const Center(
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              );
+                                            }
 
-                                  return ListView.builder(
-                                    padding: EdgeInsets.zero,
-                                    shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    itemCount: professors.length,
-                                    itemBuilder: (context, index) {
-                                      final data = professors[index].data();
+                                            if (snapshot.hasError) {
+                                              return Center(
+                                                child: Text(
+                                                  'Error: ${snapshot.error}',
+                                                ),
+                                              );
+                                            }
 
-                                      return Padding(
-                                        padding: const EdgeInsets.only(
-                                          bottom: 12,
+                                            final professors =
+                                                snapshot.data!.docs;
+
+                                            if (professors.isEmpty) {
+                                              return const Center(
+                                                child: Text(
+                                                  "Nenhum professor encontrado",
+                                                ),
+                                              );
+                                            }
+
+                                            return ListView.builder(
+                                              padding: EdgeInsets.zero,
+                                              shrinkWrap: true,
+                                              physics:
+                                                  NeverScrollableScrollPhysics(),
+                                              itemCount: professors.length,
+                                              itemBuilder: (context, index) {
+                                                final data = professors[index]
+                                                    .data();
+
+                                                return Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                        bottom: 12,
+                                                      ),
+                                                  child: InkWell(
+                                                    onTap: () {},
+                                                    child: Container(
+                                                      height: 113.2,
+                                                      decoration: BoxDecoration(
+                                                        color: Color(
+                                                          0xFF06223A,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                              12,
+                                                            ),
+                                                        border: Border.all(
+                                                          color: Color(
+                                                            0xFFE6E6E6,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      child: TeacherCard(
+                                                        teacher: TeacherModel(
+                                                          id: professors[index]
+                                                              .id,
+                                                          name:
+                                                              data['fullName'] ??
+                                                              '',
+                                                          subject:
+                                                              data['subject'] ??
+                                                              '',
+                                                          period:
+                                                              data['period'] ??
+                                                              '',
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
                                         ),
-                                        child: InkWell(
-                                          onTap: () {},
-                                          child: Container(
-                                            height: 113.2,
-                                            decoration: BoxDecoration(
-                                              color: Color(0xFF06223A),
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                              border: Border.all(
-                                                color: Color(0xFFE6E6E6),
-                                              ),
-                                            ),
-                                            child: TeacherCard(
-                                              teacher: TeacherModel(
-                                                id: professors[index].id,
-                                                name: data['fullName'] ?? '',
-                                                subject: data['subject'] ?? '',
-                                                period: data['period'] ?? '',
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  );
-                                },
-                              ),
-                        ),
+                                  ),
+                                ],
+                              )
+                            : SizedBox.shrink(),
                       ],
                     ),
                   ),

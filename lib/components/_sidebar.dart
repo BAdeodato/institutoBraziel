@@ -103,11 +103,13 @@ class _Sidebar extends State<Sidebar> {
                               padding: EdgeInsets.all(2),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(50),
-                                child: Image.network(
-                                  'https://images.unsplash.com/photo-1624561172888-ac93c696e10c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NjJ8fHVzZXJzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-                                  width: 80,
-                                  height: 80,
-                                  fit: BoxFit.cover,
+                                child: Container(
+                                  color: Colors.grey.shade200,
+                                  child: const Icon(
+                                    Icons.person,
+                                    size: 40,
+                                    color: Color(0xFF6F0606),
+                                  ),
                                 ),
                               ),
                             ),

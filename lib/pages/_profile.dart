@@ -1,6 +1,11 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:instituto_braziel/services/auth_service.dart';
 import 'package:instituto_braziel/services/users_service.dart';
 import 'package:instituto_braziel/utils/_input_formatters.dart';
@@ -25,6 +30,8 @@ class Profile extends StatefulWidget {
 class _Profile extends State<Profile> {
   late Future<DocumentSnapshot<Map<String, dynamic>>?> _userFuture;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  File? _selectedImage;
+  bool _isUploading = false;
   String? selectedPeriod;
   bool _initialized = false;
   // ✅ Static list
@@ -35,6 +42,20 @@ class _Profile extends State<Profile> {
     'teste4',
     'teste5',
   ];
+
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 70,
+    );
+
+    if (pickedFile == null) return;
+
+    setState(() {
+      _selectedImage = File(pickedFile.path);
+    });
+  }
 
   @override
   void initState() {
@@ -55,6 +76,7 @@ class _Profile extends State<Profile> {
     return FutureBuilder(
       future: _userFuture,
       builder: (context, snapshot) {
+        final uid = FirebaseAuth.instance.currentUser!.uid;
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
@@ -114,6 +136,38 @@ class _Profile extends State<Profile> {
         final TextEditingController userName = TextEditingController(
           text: data?['userName'] ?? '',
         );
+        Widget _buildProfileImage(Map<String, dynamic>? data) {
+          // Local image
+          if (_selectedImage != null && _selectedImage!.existsSync()) {
+            return Image.file(_selectedImage!, fit: BoxFit.cover);
+          }
+
+          // Firestore URL
+          final photoUrl = data?['photoUrl'];
+          if (photoUrl != null && photoUrl.isNotEmpty) {
+            return Image.network(
+              photoUrl,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Container(
+                  color: Colors.grey.shade200,
+                  child: const Icon(
+                    Icons.person,
+                    size: 60,
+                    color: Color(0xFF6F0606),
+                  ),
+                );
+              },
+            );
+          }
+
+          // Default avatar
+          return Container(
+            color: Colors.grey.shade200,
+            child: const Icon(Icons.person, size: 60, color: Color(0xFF6F0606)),
+          );
+        }
+
         return Scaffold(
           // backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
           appBar: AppBar(
@@ -167,7 +221,6 @@ class _Profile extends State<Profile> {
                           child: Container(
                             width: MediaQuery.sizeOf(context).width * 0.9,
                             decoration: BoxDecoration(
-                              // color: FlutterFlowTheme.of(context).accent4,
                               boxShadow: [
                                 BoxShadow(
                                   blurRadius: 8,
@@ -179,22 +232,22 @@ class _Profile extends State<Profile> {
                             ),
                             child: Padding(
                               padding: EdgeInsets.all(12),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Container(
-                                    width: 200,
-                                    height: 200,
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
+                              child: InkWell(
+                                onTap: _pickImage,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Container(
+                                      width: 200,
+                                      height: 200,
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: _buildProfileImage(data),
                                     ),
-                                    child: Image.network(
-                                      'https://picsum.photos/seed/139/600',
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -854,6 +907,18 @@ class _Profile extends State<Profile> {
                                 );
                               }
                               try {
+                                String? photoUrl;
+
+                                // 👇 upload only if user selected new image
+                                if (_selectedImage != null) {
+                                  final ref = FirebaseStorage.instance
+                                      .ref()
+                                      .child('profile_images')
+                                      .child('$uid.jpg');
+
+                                  await ref.putFile(_selectedImage!);
+                                  photoUrl = await ref.getDownloadURL();
+                                }
                                 await context.read<UsersService>().update(
                                   birth: birth.text,
                                   fullName: fullName.text,
@@ -866,6 +931,7 @@ class _Profile extends State<Profile> {
                                   relativesEmail: relativesEmail.text,
                                   relativesId: relativesCpf.text,
                                   period: selectedPeriod,
+                                  photoUrl: photoUrl,
                                   id: cpf.text,
                                   over18: switchValue,
                                   phone: phone.text,
