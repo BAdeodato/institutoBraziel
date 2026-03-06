@@ -1,8 +1,10 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
@@ -31,10 +33,10 @@ class _Profile extends State<Profile> {
   late Future<DocumentSnapshot<Map<String, dynamic>>?> _userFuture;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   File? _selectedImage;
-  bool _isUploading = false;
+  Uint8List? _webImage;
   String? selectedPeriod;
   bool _initialized = false;
-  // ✅ Static list
+
   final List<String> periodList = [
     'teste1',
     'teste2',
@@ -45,16 +47,26 @@ class _Profile extends State<Profile> {
 
   Future<void> _pickImage() async {
     final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(
+
+    final picked = await picker.pickImage(
       source: ImageSource.gallery,
-      imageQuality: 70,
+      imageQuality: 80,
     );
 
-    if (pickedFile == null) return;
+    if (picked == null) return;
 
-    setState(() {
-      _selectedImage = File(pickedFile.path);
-    });
+    if (kIsWeb) {
+      final bytes = await picked.readAsBytes();
+      setState(() {
+        _webImage = bytes;
+        _selectedImage = null;
+      });
+    } else {
+      setState(() {
+        _selectedImage = File(picked.path);
+        _webImage = null;
+      });
+    }
   }
 
   @override
@@ -136,36 +148,34 @@ class _Profile extends State<Profile> {
         final TextEditingController userName = TextEditingController(
           text: data?['userName'] ?? '',
         );
-        Widget _buildProfileImage(Map<String, dynamic>? data) {
-          // Local image
-          if (_selectedImage != null && _selectedImage!.existsSync()) {
-            return Image.file(_selectedImage!, fit: BoxFit.cover);
-          }
 
-          // Firestore URL
-          final photoUrl = data?['photoUrl'];
-          if (photoUrl != null && photoUrl.isNotEmpty) {
-            return Image.network(
-              photoUrl,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  color: Colors.grey.shade200,
-                  child: const Icon(
-                    Icons.person,
-                    size: 60,
-                    color: Color(0xFF6F0606),
-                  ),
-                );
-              },
-            );
-          }
-
-          // Default avatar
+        Widget _defaultAvatar() {
           return Container(
             color: Colors.grey.shade200,
             child: const Icon(Icons.person, size: 60, color: Color(0xFF6F0606)),
           );
+        }
+
+        Widget _buildProfileImage(Map<String, dynamic>? data) {
+          if (_webImage != null) {
+            return Image.memory(_webImage!, fit: BoxFit.cover);
+          }
+
+          if (_selectedImage != null) {
+            return Image.file(_selectedImage!, fit: BoxFit.cover);
+          }
+
+          final photoUrl = data?['photoUrl'];
+
+          if (photoUrl != null && photoUrl.isNotEmpty) {
+            return Image.network(
+              photoUrl,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => _defaultAvatar(),
+            );
+          }
+
+          return _defaultAvatar();
         }
 
         return Scaffold(
@@ -909,14 +919,18 @@ class _Profile extends State<Profile> {
                               try {
                                 String? photoUrl;
 
-                                // 👇 upload only if user selected new image
-                                if (_selectedImage != null) {
-                                  final ref = FirebaseStorage.instance
-                                      .ref()
-                                      .child('profile_images')
-                                      .child('$uid.jpg');
+                                final ref = FirebaseStorage.instance
+                                    .ref()
+                                    .child('profile_images')
+                                    .child('$uid.jpg');
 
+                                if (_selectedImage != null) {
+                                  // MOBILE
                                   await ref.putFile(_selectedImage!);
+                                  photoUrl = await ref.getDownloadURL();
+                                } else if (_webImage != null) {
+                                  // WEB
+                                  await ref.putData(_webImage!);
                                   photoUrl = await ref.getDownloadURL();
                                 }
                                 await context.read<UsersService>().update(
