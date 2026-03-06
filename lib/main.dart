@@ -11,8 +11,6 @@ import 'package:instituto_braziel/services/auth_service.dart';
 import 'package:instituto_braziel/services/users_service.dart';
 import 'package:provider/provider.dart';
 import 'pages/_login.dart';
-// import 'package:firebase_core/firebase_core.dart';
-// import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
