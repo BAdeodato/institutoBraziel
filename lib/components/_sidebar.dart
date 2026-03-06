@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:instituto_braziel/components/_generic_bottom_up.dart';
 import 'package:instituto_braziel/components/_new_password.dart';
 import 'package:instituto_braziel/services/users_service.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 class Sidebar extends StatefulWidget {
   const Sidebar({super.key});
@@ -85,7 +87,6 @@ class _Sidebar extends State<Sidebar> {
                       children: [
                         InkWell(
                           onTap: () {
-                            // TODO: DEPOIS PREENCHER AS INFORMAÇÕES DA PESSOA AO CARREGAR A PÁGINA, DE ACORDO COM O PERFIL LOGADO
                             Navigator.pushNamed(context, 'profile');
                           },
                           child: Container(
@@ -125,7 +126,6 @@ class _Sidebar extends State<Sidebar> {
                             ),
                             child: InkWell(
                               onTap: () {
-                                // TODO: DEPOIS PREENCHER AS INFORMAÇÕES DA PESSOA AO CARREGAR A PÁGINA, DE ACORDO COM O PERFIL LOGADO
                                 Navigator.pushNamed(context, 'profile');
                               },
                               child: Column(
@@ -356,34 +356,73 @@ class _Sidebar extends State<Sidebar> {
                               borderRadius: BorderRadius.circular(12),
                               shape: BoxShape.rectangle,
                             ),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                8,
-                                0,
-                                8,
-                                0,
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.phone_iphone,
-                                    // color: FlutterFlowTheme.of(context).primaryText,
-                                    size: 24,
-                                  ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                        12,
-                                        0,
-                                        0,
-                                        0,
+                            child: InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                await showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  backgroundColor: Colors.transparent,
+                                  enableDrag: false,
+                                  context: context,
+                                  builder: (context) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        FocusScope.of(context).unfocus();
+                                        FocusManager.instance.primaryFocus
+                                            ?.unfocus();
+                                      },
+                                      child: Padding(
+                                        padding: MediaQuery.viewInsetsOf(
+                                          context,
+                                        ),
+                                        child: SizedBox(
+                                          height:
+                                              MediaQuery.sizeOf(
+                                                context,
+                                              ).height *
+                                              0.5,
+                                          child: GenericButtomUp(
+                                            text: 'sobre o app',
+                                          ),
+                                        ),
                                       ),
-                                      child: Text('Sobre o App'),
+                                    );
+                                  },
+                                ).then((value) => setState(() {}));
+                              },
+
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                  8,
+                                  0,
+                                  8,
+                                  0,
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.phone_iphone,
+                                      // color: FlutterFlowTheme.of(context).primaryText,
+                                      size: 24,
                                     ),
-                                  ),
-                                ],
+                                    Expanded(
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                          12,
+                                          0,
+                                          0,
+                                          0,
+                                        ),
+                                        child: Text('Sobre o App'),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -400,34 +439,72 @@ class _Sidebar extends State<Sidebar> {
                               borderRadius: BorderRadius.circular(12),
                               shape: BoxShape.rectangle,
                             ),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                8,
-                                0,
-                                8,
-                                0,
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.edit_document,
-                                    // color: FlutterFlowTheme.of(context).primaryText,
-                                    size: 24,
-                                  ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                        12,
-                                        0,
-                                        0,
-                                        0,
+                            child: InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                await showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  backgroundColor: Colors.transparent,
+                                  enableDrag: false,
+                                  context: context,
+                                  builder: (context) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        FocusScope.of(context).unfocus();
+                                        FocusManager.instance.primaryFocus
+                                            ?.unfocus();
+                                      },
+                                      child: Padding(
+                                        padding: MediaQuery.viewInsetsOf(
+                                          context,
+                                        ),
+                                        child: SizedBox(
+                                          height:
+                                              MediaQuery.sizeOf(
+                                                context,
+                                              ).height *
+                                              0.5,
+                                          child: GenericButtomUp(
+                                            text: 'termos e condições',
+                                          ),
+                                        ),
                                       ),
-                                      child: Text('Termos & Condições'),
+                                    );
+                                  },
+                                ).then((value) => setState(() {}));
+                              },
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                  8,
+                                  0,
+                                  8,
+                                  0,
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.edit_document,
+                                      // color: FlutterFlowTheme.of(context).primaryText,
+                                      size: 24,
                                     ),
-                                  ),
-                                ],
+                                    Expanded(
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                          12,
+                                          0,
+                                          0,
+                                          0,
+                                        ),
+                                        child: Text('Termos & Condições'),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -444,34 +521,72 @@ class _Sidebar extends State<Sidebar> {
                               borderRadius: BorderRadius.circular(12),
                               shape: BoxShape.rectangle,
                             ),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                8,
-                                0,
-                                8,
-                                0,
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.privacy_tip_rounded,
-                                    // color: FlutterFlowTheme.of(context).primaryText,
-                                    size: 24,
-                                  ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                        12,
-                                        0,
-                                        0,
-                                        0,
+                            child: InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                await showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  backgroundColor: Colors.transparent,
+                                  enableDrag: false,
+                                  context: context,
+                                  builder: (context) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        FocusScope.of(context).unfocus();
+                                        FocusManager.instance.primaryFocus
+                                            ?.unfocus();
+                                      },
+                                      child: Padding(
+                                        padding: MediaQuery.viewInsetsOf(
+                                          context,
+                                        ),
+                                        child: SizedBox(
+                                          height:
+                                              MediaQuery.sizeOf(
+                                                context,
+                                              ).height *
+                                              0.5,
+                                          child: GenericButtomUp(
+                                            text: 'política',
+                                          ),
+                                        ),
                                       ),
-                                      child: Text('Polí­tica de Privacidade'),
+                                    );
+                                  },
+                                ).then((value) => setState(() {}));
+                              },
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                  8,
+                                  0,
+                                  8,
+                                  0,
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.privacy_tip_rounded,
+                                      // color: FlutterFlowTheme.of(context).primaryText,
+                                      size: 24,
                                     ),
-                                  ),
-                                ],
+                                    Expanded(
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                          12,
+                                          0,
+                                          0,
+                                          0,
+                                        ),
+                                        child: Text('Polí­tica de Privacidade'),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -488,34 +603,49 @@ class _Sidebar extends State<Sidebar> {
                               borderRadius: BorderRadius.circular(12),
                               shape: BoxShape.rectangle,
                             ),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                8,
-                                0,
-                                8,
-                                0,
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.share,
-                                    // color: FlutterFlowTheme.of(context).primaryText,
-                                    size: 24,
+                            child: InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                await SharePlus.instance.share(
+                                  ShareParams(
+                                    text:
+                                        'Baixe o app Instituto Braziel:\nhttps://play.google.com/store/apps/details?id=com.example.app',
+                                    subject: 'Instituto Braziel',
                                   ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                        12,
-                                        0,
-                                        0,
-                                        0,
-                                      ),
-                                      child: Text('Compartilhar App'),
+                                );
+                              },
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                  8,
+                                  0,
+                                  8,
+                                  0,
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.share,
+                                      // color: FlutterFlowTheme.of(context).primaryText,
+                                      size: 24,
                                     ),
-                                  ),
-                                ],
+                                    Expanded(
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                          12,
+                                          0,
+                                          0,
+                                          0,
+                                        ),
+                                        child: Text('Compartilhar App'),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
