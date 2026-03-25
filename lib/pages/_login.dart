@@ -72,7 +72,16 @@ class _LoginState extends State<Login> {
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text('Colocar logomarca!!!'),
+                        Container(
+                          width: 250,
+                          height: 250,
+                          clipBehavior: Clip.antiAlias,
+                          decoration: BoxDecoration(shape: BoxShape.circle),
+                          child: Image.asset(
+                            'assets/images/logo-transparent.png',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                         RadioGroup<String>(
                           groupValue: selectedUser,
                           onChanged: (String? newValue) {

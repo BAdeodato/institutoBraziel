@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:instituto_braziel/components/_rating_card.dart';
 import 'package:instituto_braziel/models/_teacher_model.dart';
+import 'package:instituto_braziel/pages/_summary_payment.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class Teacher extends StatefulWidget {
@@ -113,7 +114,9 @@ class _Teacher extends State<Teacher> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(widget.teacher.name),
-                              Text((widget.teacher.subject ?? '').toUpperCase()),
+                              Text(
+                                (widget.teacher.subject ?? '').toUpperCase(),
+                              ),
                               Text(widget.teacher.period ?? ''),
                             ],
                           ),
@@ -122,7 +125,7 @@ class _Teacher extends State<Teacher> {
                     ),
                     InkWell(
                       onTap: () {
-                        // TODO: DEPOIS PREENCHER AS INFORMAÇÕES DA PESSOA AO CARREGAR A PÁGINA, DE ACORDO COM O PERFIL LOGADO
+                        // TODO: VERIFICAR A NECESSIDADE DESSE ITEM
                         Navigator.pushNamed(context, 'profile');
                       },
                       child: Column(
@@ -359,7 +362,28 @@ class _Teacher extends State<Teacher> {
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                       child: OutlinedButton(
                         onPressed: () async {
-                          // Navigator.pushNamed(context, 'home');
+                          await showModalBottomSheet(
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            enableDrag: false,
+                            context: context,
+                            builder: (context) {
+                              return GestureDetector(
+                                onTap: () {
+                                  FocusScope.of(context).unfocus();
+                                  FocusManager.instance.primaryFocus?.unfocus();
+                                },
+                                child: Padding(
+                                  padding: MediaQuery.viewInsetsOf(context),
+                                  child: SizedBox(
+                                    height:
+                                        MediaQuery.sizeOf(context).height * 0.5,
+                                    child: SummaryPayment(),
+                                  ),
+                                ),
+                              );
+                            },
+                          ).then((value) => setState(() {}));
                         },
                         style: ButtonStyle(
                           backgroundColor: WidgetStatePropertyAll(

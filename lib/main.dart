@@ -7,6 +7,7 @@ import 'package:instituto_braziel/pages/_profile.dart';
 import 'package:instituto_braziel/pages/_subject.dart';
 import 'package:instituto_braziel/pages/_subjects.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:instituto_braziel/pages/_summary_payment.dart';
 import 'package:instituto_braziel/services/auth_service.dart';
 import 'package:instituto_braziel/services/users_service.dart';
 import 'package:provider/provider.dart';
@@ -89,6 +90,7 @@ class MyApp extends StatelessWidget {
         'profile': (context) => const Profile(),
         'subjects': (context) => const Subjects(),
         'subject': (context) => const Subject(),
+        'summary_payment': (context) => const SummaryPayment(),
       },
     );
   }

@@ -64,20 +64,21 @@ class _Sidebar extends State<Sidebar> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Icon(
-                          Icons.add_task_rounded,
-                          color: Color(0xFF6F0606),
-                          size: 32,
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                          child: Text('check.io'),
-                        ),
-                      ],
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                      16,
+                      0,
+                      16,
+                      16,
+                    ),
+                    child: Container(
+                      width: 90,
+                      height: 90,
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(shape: BoxShape.circle),
+                      child: Image.asset(
+                        'assets/images/logo-transparent.png',
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                   Padding(
